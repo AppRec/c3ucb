@@ -1,15 +1,14 @@
 #! usr/bin/python
 # encoding issue: first line of app_feature.txt contains utf-16 code
-import app_pool
-
+import app_util
 # apps is a dictionary
 # category1 and category2 are dictionarys 
 # labels is a list
-apps = app_pool.find_app_pool('rand_Hiad.txt')
+apps = app_util.find_app_pool('rand_Hiad.txt')
 app_file = 'app_feature.txt'
-category1 = app_pool.app_category_num(app_file, 1)
-category2 = app_pool.app_category_num(app_file, 2)
-labels = app_pool.app_labels(app_file)
+category1 = app_util.app_category_num(app_file, 1)
+category2 = app_util.app_category_num(app_file, 2)
+labels = app_util.app_labels(app_file)
 outfile = open('extracted_app_feature.txt','w+')
 processed_data = []
 with open (app_file, 'r', encoding='utf-8') as f:
