@@ -10,13 +10,13 @@ optype_dict = {}
 app_dict = {}
 user_dict = {}
 
-date = 20161100
+mydate = 20161100
 record_counter = 0
 start = time.clock()
 for i in range(0,6):
     print '%.3f'%(time.clock()-start)
-    date += 1
-    filename = '../DataFile/Data_randomHiad_' + str(date) + '.txt'
+    mydate += 1
+    filename = '../DataFile/Data_randomHiad_' + str(mydate) + '.txt'
     with io.open(filename,'r') as f:
         data = f.readlines();
         record_counter += len(data)

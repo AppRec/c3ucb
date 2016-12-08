@@ -31,8 +31,8 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
     print '%.3f'%(time.clock()-start)
     #data = f.readlines();
     for line in f:
-        if (time.clock()-start) / 30 > t:
-            t = (time.clock()-start) / 30
+        if int(time.clock()-start) / 30 > t:
+            t = int(time.clock()-start) / 30
             print 'hahaha'
         l = line.strip().split('\t')
         download_apps = l[2].split(',') 
@@ -65,8 +65,8 @@ print '%.3f'%(time.clock()-start)
 
 with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as f:
     for line in f:
-        if (time.clock()-start) / 30 > t:
-                t = (time.clock()-start) / 30
+        if int(time.clock()-start) / 30 > t:
+                t = int(time.clock()-start) / 30
                 print 'hahaha'
         l = line.strip().split('\t')
         download_apps = l[2].split(',') 
@@ -114,8 +114,8 @@ with io.open("../user_feature.txt",'wb') as f1:
         # f1.write(',')
     # f1.write('\n')
     for line in processed_data:
-        if (time.clock()-start) / 30 > t:
-                t = (time.clock()-start) / 30
+        if int(time.clock()-start) / 30 > t:
+                t = int(time.clock()-start) / 30
                 print 'hahaha'
         line[1] = round(float((line[1]-min)/(max-min)),3)
         for i in line:
@@ -127,8 +127,8 @@ with io.open("../user_feature.txt",'wb') as f1:
 
 with io.open("../userlist.txt",'wb') as f2:
     for key in user_dict:
-        if (time.clock()-start) / 30 > t:
-                t = (time.clock()-start) / 30
+        if int(time.clock()-start) / 30 > t:
+                t = int(time.clock()-start) / 30
                 print 'hahaha'
         f2.write(key)
         f2.write(',')
