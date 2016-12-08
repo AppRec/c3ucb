@@ -10,11 +10,13 @@ app_dict = {}
 user_dict = {}
 
 date = 20161100
+record_counter = 0
 for i in range(0,6):
     date += 1
     filename = 'Data_randomHiad_' + str(date) + '.txt'
-    with open(filename,'r') as f:
+    with io.open(filename,'r') as f:
         data = f.readlines();
+        record_counter += len(data)
         for line in data:
             l = line.strip().split('\t')
             if int(l[5]) != 2 or int(l[6])<3 or int(l[6])>7:
@@ -23,6 +25,7 @@ for i in range(0,6):
             del l[3]
             processed_data.append(l)
         f.close()	
+print "There are: ",record_counter,"rows"
 	
 for line in processed_data:
     if line[0] not in optype_dict:
@@ -36,34 +39,34 @@ for line in processed_data:
 
     processed_data2.append(line)
 
-with open("applist.txt",'r') as f2:
+with io.open("applist.txt",'r') as f2:
     data = f2.readlines()
     for line in data:
         l = line.strip().split(',')
         if l[0] not in app_dict:
             app_dict[l[0]] = l[1]
         else:
-            print("repeated app id")
-            #print "repeated app id"
+            #print("repeated app id")
+            print "repeated app id"
     f2.close()
 for i in range(0,len(processed_data2)):
     processed_data2[i][1] = app_dict[processed_data2[i][1]]
 
-with open("userlist.txt",'r') as f3:
+with io.open("userlist.txt",'r') as f3:
     data = f3.readlines()
     for line in data:
         l = line.strip().split(',')
         if l[0] not in user_dict:
             user_dict[l[0]] = l[1]
         else:
-            print("repeated user id")
-            #print "repeated user id"
+            #print("repeated user id")
+            print "repeated user id"
     f3.close()
 for i in range(0,len(processed_data2)):
     processed_data2[i][0] = user_dict[processed_data2[i][0]] 	
 	
 #print(processed_data2)
-with open("session.txt", 'w') as f1:
+with io.open("session.txt", 'wb') as f1:
     for line in processed_data2:
         for e in line:
             f1.write(e)

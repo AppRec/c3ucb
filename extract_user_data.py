@@ -23,7 +23,7 @@ used_dict["Null"]=0
 dl_dict["Null"]=0
 search_dict["Null"]=0
 
-with open("Result_user_down_search_20161030.txt",'r', encoding='UTF-8') as f:
+with io.open("Result_user_down_search_20161030.txt",'r', encoding='UTF-8') as f:
     data = f.readlines();
     for line in data:
         l = line.strip().split('\t')
@@ -81,8 +81,10 @@ for line in data:
 
 max = max([row[1] for row in processed_data])
 min = min([row[1] for row in processed_data])
+#print("Num of users: ", user_counter)
+print "Num of users: ", user_counter
 
-with open("user_feature.txt",'w') as f1:
+with io.open("user_feature.txt",'wb') as f1:
     f1.write("uid")
     f1.write(',')
     f1.write("device_type")
@@ -105,7 +107,7 @@ with open("user_feature.txt",'w') as f1:
         f1.write('\n')
     f1.close()
 
-with open("userlist.txt",'w') as f2:
+with io.open("userlist.txt",'wb') as f2:
     for key in user_dict:
         f2.write(key)
         f2.write(',')
