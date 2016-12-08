@@ -10,7 +10,7 @@ app_dict = {}
 user_dict = {}
 
 date = 20161100
-for i in range(0,1):
+for i in range(0,6):
     date += 1
     filename = 'Data_randomHiad_' + str(date) + '.txt'
     with open(filename,'r') as f:
