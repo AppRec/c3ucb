@@ -7,7 +7,7 @@ find from session record the apps exist in list 2, position 3~7
 def find_app_pool(filename):
     apps = []
     uniq_apps=[]
-    with io.open (filename,mode='r',encoding='utf-16') as f:
+    with io.open (filename,mode='r',encoding='utf-8') as f:
         f.readline()
         for line in f:
             try:
