@@ -33,7 +33,7 @@ with open("../userlist.txt",'r') as f:
     data = f.readlines()
     for line in data:
         l = line.strip().split(',')
-        if l[0] not in app_dict:
+        if l[0] not in user_dict:
             user_dict[l[0]] = l[1]
     f.close()
     
@@ -45,6 +45,7 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
             t = int(time.clock()-start) / 30
             print '30 seconds left'
         l = line.strip().split('\t')
+        
         if l[0] not in user_dict:
             continue
         download_apps = l[2].split(',') 
@@ -78,6 +79,8 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
                 t = int(time.clock()-start) / 30
                 print '30 seconds left'
         l = line.strip().split('\t')
+        if l[0] not in user_dict:
+            continue
         download_apps = l[2].split(',') 
         used_apps = l[3].split(',')
         search_apps = l[4].split(',')

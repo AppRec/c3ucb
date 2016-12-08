@@ -12,7 +12,8 @@ mydate = 20161100
 record_counter = 0
 user_counter = 0
 start = time.clock()
-for i in range(0,6):
+t=0
+for i in range(0,1):
     print 'Start at time: %.3f'%(time.clock()-start)
     mydate += 1
     filename = '../DataFile/Data_randomHiad_' + str(mydate) + '.txt'
@@ -22,7 +23,7 @@ for i in range(0,6):
         for line in data:
             l = line.strip().split('\t')
             #delete rows where position<3 && position>7 and category='HiAd'in list = 2
-            if l[4] != 'HiAd' or int(l[6]) != 2 or int(l[7])<3 or int(l[7])>7:
+            if l[4] != 'HiAd' or int(l[6]) != 2 or int(l[7])<3 or int(l[7])>7:#HiAd
                 continue
             #delete date&time, HiAd;
             del l[2]
@@ -64,12 +65,12 @@ print 'applist Loaded at: %.3f'%(time.clock()-start)
     
 for line in processed_data2:
     if line[0] not in user_dict:
-        user_dict[line[0]] = user_counter
         user_counter += 1
+        user_dict[line[0]] = user_counter
 for i in range(0,len(processed_data2)):
     processed_data2[i][0] = user_dict[processed_data2[i][0]] 
 print 'userlist Loaded at: %.3f'%(time.clock()-start)	
-print 'User amount is: ', user_counter-1
+print 'User amount is: ', user_counter
 
 with open("../userlist.txt",'w') as f3:
     for key in user_dict:
@@ -88,7 +89,7 @@ with open("../session.txt", 'w') as f1:
     print '%.3f'%(time.clock()-start)
     for line in processed_data2:
         for e in line:
-            f1.write(e)
+            f1.write(str(e))
             f1.write(',')
         f1.write('\n')
     f1.close()
