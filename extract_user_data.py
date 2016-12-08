@@ -23,7 +23,7 @@ used_dict["Null"]=0
 dl_dict["Null"]=0
 search_dict["Null"]=0
 
-with io.open("Result_user_down_search_20161030.txt",'r', encoding='UTF-8') as f:
+with io.open("../Result_user_down_search_20161030.txt",'r', encoding='UTF-8') as f:
     data = f.readlines();
     for line in data:
         l = line.strip().split('\t')
@@ -84,21 +84,21 @@ min = min([row[1] for row in processed_data])
 #print("Num of users: ", user_counter)
 print "Num of users: ", user_counter
 
-with io.open("user_feature.txt",'wb') as f1:
-    f1.write("uid")
-    f1.write(',')
-    f1.write("device_type")
-    f1.write(',')
-    for key in dl_dict:
-        f1.write(key)
-        f1.write(',')
-    for key in used_dict: 
-        f1.write(key)
-        f1.write(',')
-    for key in search_dict:
-        f1.write(key)
-        f1.write(',')
-    f1.write('\n')
+with io.open("../user_feature.txt",'wb') as f1:
+    # f1.write("uid")
+    # f1.write(',')
+    # f1.write("device_type")
+    # f1.write(',')
+    # for key in dl_dict:
+        # f1.write(key)
+        # f1.write(',')
+    # for key in used_dict: 
+        # f1.write(key)
+        # f1.write(',')
+    # for key in search_dict:
+        # f1.write(key)
+        # f1.write(',')
+    # f1.write('\n')
     for line in processed_data:
         line[1] = round(float((line[1]-min)/(max-min)),3)
         for i in line:
@@ -107,7 +107,7 @@ with io.open("user_feature.txt",'wb') as f1:
         f1.write('\n')
     f1.close()
 
-with io.open("userlist.txt",'wb') as f2:
+with io.open("../userlist.txt",'wb') as f2:
     for key in user_dict:
         f2.write(key)
         f2.write(',')

@@ -13,7 +13,7 @@ date = 20161100
 record_counter = 0
 for i in range(0,6):
     date += 1
-    filename = 'Data_randomHiad_' + str(date) + '.txt'
+    filename = '../DataFile/Data_randomHiad_' + str(date) + '.txt'
     with io.open(filename,'r') as f:
         data = f.readlines();
         record_counter += len(data)
@@ -39,7 +39,7 @@ for line in processed_data:
 
     processed_data2.append(line)
 
-with io.open("applist.txt",'r') as f2:
+with io.open("../applist.txt",'r') as f2:
     data = f2.readlines()
     for line in data:
         l = line.strip().split(',')
@@ -52,7 +52,7 @@ with io.open("applist.txt",'r') as f2:
 for i in range(0,len(processed_data2)):
     processed_data2[i][1] = app_dict[processed_data2[i][1]]
 
-with io.open("userlist.txt",'r') as f3:
+with io.open("../userlist.txt",'r') as f3:
     data = f3.readlines()
     for line in data:
         l = line.strip().split(',')
@@ -66,7 +66,7 @@ for i in range(0,len(processed_data2)):
     processed_data2[i][0] = user_dict[processed_data2[i][0]] 	
 	
 #print(processed_data2)
-with io.open("session.txt", 'wb') as f1:
+with io.open("../session.txt", 'wb') as f1:
     for line in processed_data2:
         for e in line:
             f1.write(e)
