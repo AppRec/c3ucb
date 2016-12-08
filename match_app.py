@@ -32,22 +32,22 @@ def match(session, action):
 
 	return match_kv
 
+#
+# def main():
+	# session = np.array([[1,11,61,2,4],
+						# [1,18,11,2,5],
+						# [1,1,61,2,6],
+						# [1,9,11,2,5],
+						# [1,2,10,2,5],
+						# [1,3,61,2,5],
+						# [1,4,61,2,5],
+						# [1,5,61,2,5]])
+	# action_1 = np.array([3,4,5,6,9])
+	# action_2 = np.array([9,32,2,45,5])
+	# action_3 = np.array([3,4,5,3,3])
+	# print match(session, action_1)
+	# print match(session, action_2)
+	# print match(session, action_3)
 
-def main():
-	session = np.array([[1,11,61,2,4],
-						[1,18,11,2,5],
-						[1,1,61,2,6],
-						[1,9,11,2,5],
-						[1,2,10,2,5],
-						[1,3,61,2,5],
-						[1,4,61,2,5],
-						[1,5,61,2,5]])
-	action_1 = np.array([3,4,5,6,9])
-	action_2 = np.array([9,32,2,45,5])
-	action_3 = np.array([3,4,5,3,3])
-	print match(session, action_1)
-	print match(session, action_2)
-	print match(session, action_3)
-
-if __name__ == '__main__':
-	main()
+# if __name__ == '__main__':
+	# main()
