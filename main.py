@@ -5,13 +5,12 @@ import utils
 #read in file
 tmp = []
 with open("session.txt", "r") as f:
-    data1 = f.readlines()
-    for line in data1:
+    for line in f:
         line = line.strip().rstrip(',').split(',')
         # py2
         # data = map(float,data)
         # py3
-        print(line)
+        #print(line)
         line = list(map(float, line))
         tmp.append(line)
     f.close()
@@ -19,12 +18,11 @@ data = np.asarray(tmp)
 tmp=[]
 
 with open("user_feature.txt", "r") as f:
-    data2 = f.readlines()
-    for line in data2:
+    for line in f:
         line = line.strip().rstrip(',').split(',')
-    # py2
-    # user = map(float,user)
-    # py3
+        # py2
+        # user = map(float,user)
+        # py3
         line = list(map(float, line))
         tmp.append(line)
     f.close()
@@ -32,19 +30,18 @@ user = np.asarray(tmp)
 tmp=[]
 
 with open("extracted_app_feature.txt", "r") as f:
-    data3 = f.readlines()
-    for line in data3:
+    for line in f:
         line = line.strip().rstrip(',').split(',')
-    # py2
-    # user = map(float,user)
-    # py3
+        # py2
+        # user = map(float,user)
+        # py3
         line= list(map(float, line))
         tmp.append(line)
     f.close()
 app = np.asarray(tmp)
     
 #initialization
-print(app.shape)
+print app.shape
 pool_size = app.shape[0]
 user_row_n = user.shape[1]
 app_row_n = app.shape[1]
@@ -114,10 +111,4 @@ for i in range(ts_idx.shape[0]):
     click_n = click_n + utils.get_reward(w)
 
 result = click_n / session_n*K
-print("the reward is: %s" % result)
-
-        
-    
-    
-    
-    
+print "the reward is: %s" % result
