@@ -1,5 +1,6 @@
 #! usr/bin/python
 # encoding issue: first line of app_feature.txt contains utf-16 code
+import io
 import app_util
 # apps is a dictionary
 # category1 and category2 are dictionarys 
@@ -11,7 +12,7 @@ category2 = app_util.app_category_num(app_file, 2)
 labels = app_util.app_labels(app_file)
 outfile = open('extracted_app_feature.txt','w+')
 processed_data = []
-with open (app_file, 'r', encoding='utf-8') as f:
+with io.open (app_file, mode='r', encoding='utf-8') as f:
     for line in f:
         app_feature = []
         line = line.strip().split('\t')

@@ -1,13 +1,13 @@
 #! usr/bin/python
 # encoding issues: Hiad.txt can only open with 'utf-16'
-
+import io
 '''
 find from session record the apps exist in list 2, position 3~7
 '''
 def find_app_pool(filename):
     apps = []
     uniq_apps=[]
-    with open (filename,'r',encoding='utf-16') as f:    
+    with io.open (filename,mode='r',encoding='utf-16') as f:
         f.readline()
         for line in f:
             try:
@@ -46,7 +46,7 @@ def app_category_num(filename, category_level):
     apps = set()
     app_dict = {}
     cnt = 0
-    with open (filename,'r',encoding='utf-8') as f:
+    with io.open (filename,mode='r',encoding='utf-8') as f:
         if (category_level == 1):
             for line in f:
                 l = line.strip().split('\t')
@@ -72,7 +72,7 @@ def app_category_num(filename, category_level):
 
 def app_labels(filename):
     labels = set()
-    with open (filename,'r',encoding='utf-8') as f:
+    with io.open (filename,mode='r',encoding='utf-8') as f:
         for line in f:
             l = line.strip().split('\t')
             if (len(l) != 7):
@@ -87,7 +87,7 @@ def app_labels(filename):
 def main():
     session_file = 'rand_Hiad.txt'
     app_pool = find_app_pool(session_file)
-    with open('app_index.txt','w') as f:
+    with io.open('app_index.txt',mode='wb') as f:
        index = 1
        for app in app_pool:
            f.write(str(app) + ',' + str(index) + '\n')
