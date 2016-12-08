@@ -28,12 +28,12 @@ search_dict["Null"]=0
 start = time.clock()
 t=0
 with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as f:
-    print '%.3f'%(time.clock()-start)
+    print 'Start at time: %.3f'%(time.clock()-start)
     #data = f.readlines();
     for line in f:
         if int(time.clock()-start) / 30 > t:
             t = int(time.clock()-start) / 30
-            print 'hahaha'
+            print '30 seconds left'
         l = line.strip().split('\t')
         download_apps = l[2].split(',') 
         used_apps = l[3].split(',')
@@ -61,13 +61,13 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
 del dl_dict['Null']
 del used_dict['Null']
 del search_dict['Null']
-print '%.3f'%(time.clock()-start)
+print 'Users loaded at: %.3f'%(time.clock()-start)
 
 with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as f:
     for line in f:
         if int(time.clock()-start) / 30 > t:
                 t = int(time.clock()-start) / 30
-                print 'hahaha'
+                print '30 seconds left'
         l = line.strip().split('\t')
         download_apps = l[2].split(',') 
         used_apps = l[3].split(',')
@@ -96,9 +96,9 @@ max = max([row[1] for row in processed_data])
 min = min([row[1] for row in processed_data])
 #print("Num of users: ", user_counter)
 print "Num of users: ", user_counter
-print '%.3f'%(time.clock()-start)
+print 'Filtering completed at %.3f'%(time.clock()-start)
 
-with io.open("../user_feature.txt",'wb') as f1:
+with open("../user_feature.txt",'w') as f1:
     # f1.write("uid")
     # f1.write(',')
     # f1.write("device_type")
@@ -116,22 +116,23 @@ with io.open("../user_feature.txt",'wb') as f1:
     for line in processed_data:
         if int(time.clock()-start) / 30 > t:
                 t = int(time.clock()-start) / 30
-                print 'hahaha'
+                print '30 seconds left'
         line[1] = round(float((line[1]-min)/(max-min)),3)
         for i in line:
             f1.write(str(i))
             f1.write(',')
         f1.write('\n')
-    print '%.3f'%(time.clock()-start)
+    print 'user_feature.txt outputed at: %.3f'%(time.clock()-start)
     f1.close()
 
-with io.open("../userlist.txt",'wb') as f2:
+with open("../userlist.txt",'w') as f2:
     for key in user_dict:
         if int(time.clock()-start) / 30 > t:
                 t = int(time.clock()-start) / 30
-                print 'hahaha'
+                print '30 seconds left'
         f2.write(key)
         f2.write(',')
         f2.write(str(user_dict[key]))
         f2.write('\n')
+    print 'userlist.txt outputed at: %.3f'%(time.clock()-start)
     f2.close()
