@@ -26,10 +26,14 @@ dl_dict["Null"]=0
 search_dict["Null"]=0
 
 start = time.clock()
+t=0
 with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as f:
     print '%.3f'%(time.clock()-start)
-    data = f.readlines();
-    for line in data:
+    #data = f.readlines();
+    for line in f:
+        if (time.clock()-start) / 30 > t:
+            t = (time.clock()-start) / 30
+            print 'hahaha'
         l = line.strip().split('\t')
         download_apps = l[2].split(',') 
         used_apps = l[3].split(',')
@@ -59,30 +63,34 @@ del used_dict['Null']
 del search_dict['Null']
 print '%.3f'%(time.clock()-start)
 
-for line in data:
-    l = line.strip().split('\t')
-    download_apps = l[2].split(',') 
-    used_apps = l[3].split(',')
-    search_apps = l[4].split(',')
-    newl=[]
-    newl.append(user_dict[l[0]])
-    newl.append(type_dict[l[1]])
-    for key in dl_dict:
-        if key in download_apps:
-            newl.append(1)
-        else:
-            newl.append(0)
-    for key in used_dict:
-        if key in used_apps:
-            newl.append(1)
-        else:
-            newl.append(0)
-    for key in search_dict:
-        if key in search_apps:
-            newl.append(1)
-        else:
-            newl.append(0)
-    processed_data.append(newl)
+with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as f:
+    for line in f:
+        if (time.clock()-start) / 30 > t:
+                t = (time.clock()-start) / 30
+                print 'hahaha'
+        l = line.strip().split('\t')
+        download_apps = l[2].split(',') 
+        used_apps = l[3].split(',')
+        search_apps = l[4].split(',')
+        newl=[]
+        newl.append(user_dict[l[0]])
+        newl.append(type_dict[l[1]])
+        for key in dl_dict:
+            if key in download_apps:
+                newl.append(1)
+            else:
+                newl.append(0)
+        for key in used_dict:
+            if key in used_apps:
+                newl.append(1)
+            else:
+                newl.append(0)
+        for key in search_dict:
+            if key in search_apps:
+                newl.append(1)
+            else:
+                newl.append(0)
+        processed_data.append(newl)
 
 max = max([row[1] for row in processed_data])
 min = min([row[1] for row in processed_data])
@@ -106,6 +114,9 @@ with io.open("../user_feature.txt",'wb') as f1:
         # f1.write(',')
     # f1.write('\n')
     for line in processed_data:
+        if (time.clock()-start) / 30 > t:
+                t = (time.clock()-start) / 30
+                print 'hahaha'
         line[1] = round(float((line[1]-min)/(max-min)),3)
         for i in line:
             f1.write(str(i))
@@ -116,6 +127,9 @@ with io.open("../user_feature.txt",'wb') as f1:
 
 with io.open("../userlist.txt",'wb') as f2:
     for key in user_dict:
+        if (time.clock()-start) / 30 > t:
+                t = (time.clock()-start) / 30
+                print 'hahaha'
         f2.write(key)
         f2.write(',')
         f2.write(str(user_dict[key]))
