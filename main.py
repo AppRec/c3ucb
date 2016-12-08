@@ -4,7 +4,7 @@ import utils
 
 #read in file
 tmp = []
-with open("session.txt", "r") as f:
+with open("../session.txt", "r") as f:
     for line in f:
         line = line.strip().rstrip(',').split(',')
         # py2
@@ -17,7 +17,7 @@ with open("session.txt", "r") as f:
 data = np.asarray(tmp)
 tmp=[]
 
-with open("user_feature.txt", "r") as f:
+with open("../user_feature.txt", "r") as f:
     for line in f:
         line = line.strip().rstrip(',').split(',')
         # py2
@@ -29,7 +29,7 @@ with open("user_feature.txt", "r") as f:
 user = np.asarray(tmp)
 tmp=[]
 
-with open("extracted_app_feature.txt", "r") as f:
+with open("../extracted_app_feature.txt", "r") as f:
     for line in f:
         line = line.strip().rstrip(',').split(',')
         # py2
