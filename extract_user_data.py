@@ -5,6 +5,7 @@
 import sys
 import numpy as np
 import math
+import time
 
 data = []
 processed_data = []
@@ -23,7 +24,9 @@ used_dict["Null"]=0
 dl_dict["Null"]=0
 search_dict["Null"]=0
 
-with io.open("../Result_user_down_search_20161030.txt",'r', encoding='UTF-8') as f:
+start = time.clock()
+with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as f:
+    print('%.3f'%(time.clock()-start))
     data = f.readlines();
     for line in data:
         l = line.strip().split('\t')
@@ -53,6 +56,7 @@ with io.open("../Result_user_down_search_20161030.txt",'r', encoding='UTF-8') as
 del dl_dict['Null']
 del used_dict['Null']
 del search_dict['Null']
+print('%.3f'%(time.clock()-start))
 
 for line in data:
     l = line.strip().split('\t')
@@ -83,6 +87,7 @@ max = max([row[1] for row in processed_data])
 min = min([row[1] for row in processed_data])
 #print("Num of users: ", user_counter)
 print "Num of users: ", user_counter
+print('%.3f'%(time.clock()-start))
 
 with io.open("../user_feature.txt",'wb') as f1:
     # f1.write("uid")
@@ -105,6 +110,7 @@ with io.open("../user_feature.txt",'wb') as f1:
             f1.write(str(i))
             f1.write(',')
         f1.write('\n')
+    print('%.3f'%(time.clock()-start))
     f1.close()
 
 with io.open("../userlist.txt",'wb') as f2:
