@@ -4,32 +4,39 @@ import io
 '''
 find from session record the apps exist in list 2, position 3~7
 '''
-def find_app_pool(filename):
+def find_app_pool():
+    d = 20161100
     apps = []
     uniq_apps=[]
-    with io.open (filename,mode='r',encoding='utf-8') as f:
-        f.readline()
-        for line in f:
-            try:
-                device_id, app_id, date, oper_type, Hiad, blank, listid, position = line.strip().split('\t')
-            except ValueError:
-                continue
-            try:
-                mainPage = int(listid)
-                pos = int(position)
-            except ValueError:
-                continue
-            else:
-                if (mainPage == 2):
-                    if (pos >=3 and pos <= 7):
-                        apps.append(app_id)
+    for i in range(2):
+        d += 1
+        filename = 'DataFile/Data_randomHiad_' + str(d) + '.txt'
 
+        with io.open (filename,mode='r',encoding='utf-8') as f:
+            f.readline()
+            for line in f:
+                try:
+                    # print(line)
+                    device_id, app_id, date, oper_type, Hiad, listid, position = line.strip().split('\t')
+                except ValueError:
+                    continue
+                try:
+                    mainPage = int(listid)
+                    pos = int(position)
+                except ValueError:
+                    continue
+                else:
+                    if (mainPage == 2):
+                        if (pos >=3 and pos <= 7):
+                            apps.append(app_id)
+    # print(apps)
     # print("the length of list of app is: {}".format(len(apps)))
     seen = set()
     for x in apps:
         if x not in seen:
             seen.add(x)
             uniq_apps.append(x)
+    print('uniq_apps: ', uniq_apps)
     # print("the length of unique list is: {}".format(len(uniq_apps)))
     index = 1
     app_dict = {}
@@ -85,22 +92,22 @@ def app_labels(filename):
     return list(labels)
             
 def main():
-    session_file = 'rand_Hiad.txt'
-    app_pool = find_app_pool(session_file)
-    with io.open('app_index.txt',mode='wb') as f:
-       index = 1
-       for app in app_pool:
-           f.write(str(app) + ',' + str(index) + '\n')
-           index += 1
-
+    # session_file = 'rand_Hiad.txt'
+    app_pool = find_app_pool()
+    # with io.open('app_index.txt',mode='wb') as f:
+    #    index = 1
+    #    for app in app_pool:
+    #        f.write(str(app) + ',' + str(index) + '\n')
+    #        index += 1
+    # print (app_pool)
     # print(app_pool)
 
-    app_file = 'app_feature.txt'
-    cat_1 = app_category_num(app_file, 1)
-    # print(cat_1)
-
-    labels = app_labels(app_file)
-    print(labels)
+    # app_file = 'app_feature.txt'
+    # cat_1 = app_category_num(app_file, 1)
+    # # print(cat_1)
+    #
+    # labels = app_labels(app_file)
+    # print(labels)
 
 if __name__ == '__main__':
     main()
