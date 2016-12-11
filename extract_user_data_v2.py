@@ -1,5 +1,5 @@
 #search_word converted to number; get set of download_app && used app && searched apps 
-#convert type to number
+#convert model to number
 #uid0	type1	download_app2	used_app3	search_word4 
 #coding:utf-8
 import sys
@@ -19,7 +19,6 @@ type_counter=0
 used_counter=0
 dl_counter=0
 search_counter=0
-user_counter = 0
 type_dict["Null"]=0
 used_dict["Null"]=0
 dl_dict["Null"]=0
@@ -28,6 +27,7 @@ search_dict["Null"]=0
 start = time.clock()
 t=0
 
+#read the list of user
 with open("../userlist.txt",'r') as f:
     print 'Start at time: %.3f'%(time.clock()-start)
     data = f.readlines()
@@ -37,6 +37,7 @@ with open("../userlist.txt",'r') as f:
             user_dict[l[0]] = l[1]
     f.close()
     
+#read the user-feature dataset and filter the ones did not appear in the session data
 with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as f:
     print 'Start to load user time: %.3f'%(time.clock()-start)
     #data = f.readlines();
@@ -55,6 +56,7 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
         if l[1] not in type_dict:
             type_counter += 1
             type_dict[l[1]] = type_counter
+        #get set of download_app && used app && searched apps 
         for i in used_apps:	
             if i not in used_dict:
                 used_counter += 1
@@ -87,6 +89,7 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
         newl=[]
         newl.append(user_dict[l[0]])
         newl.append(type_dict[l[1]])
+        #convert download_app && used_app && search_word into binary variable
         for key in dl_dict:
             if key in download_apps:
                 newl.append(1)
@@ -107,7 +110,6 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
 max = max([row[1] for row in processed_data])
 min = min([row[1] for row in processed_data])
 #print("Num of users: ", user_counter)
-print "Num of users: ", user_counter
 print 'Filtering completed at %.3f'%(time.clock()-start)
 
 with open("../user_feature.txt",'w') as f1:
@@ -129,6 +131,7 @@ with open("../user_feature.txt",'w') as f1:
         if int(time.clock()-start) / 30 > t:
                 t = int(time.clock()-start) / 30
                 print '30 seconds left'
+        #min-max normlization
         line[1] = round(float((line[1]-min)/(max-min)),3)
         for i in line:
             f1.write(str(i))
