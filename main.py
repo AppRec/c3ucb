@@ -29,7 +29,7 @@ with open("../user_feature.txt", "r") as f:
 user = np.asarray(tmp)
 tmp=[]
 
-with open("../extracted_app_feature.txt", "r") as f:
+with open("../app_feature.txt", "r") as f:
     for line in f:
         line = line.strip().rstrip(',').split(',')
         # py2
@@ -49,7 +49,7 @@ d = int((user_row_n-1)*(app_row_n-1))
 session_n = int(max(data[:, 0]))
 train_ratio = 0.5
 gamma = 1
-lamb = 5
+lamb = 1
 theta = np.zeros(d)
 beta = 1
 V = lamb * np.eye(d)
@@ -81,14 +81,20 @@ for i in range(tr_idx.shape[0]):
         UCB[a] = utils.getUCB(theta, x_feature[a], beta, V)
     action = UCB.argsort()[-K:][::-1]
     reward = match_app.match(record, action)
+    idx=[]
+    val=[]
     if reward is not None:
-        idx = np.array(reward.keys())
-        x_t = x_feature[idx, :]
-        w = np.array(reward.values()).reshape(x_t.shape[0])
+        for i in reward:
+            if reward[i]==1 or reward[i]==0
+                idx.append(i)
+                val.append(reward[i])
+        idx = np.asarray(idx)
+        val = np.asarray(val)
+        x_t = x_feature[idx,:]
+        w = np.array(val.reshape(x_t.shape[0],1))
+        [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
     else:
         continue
-    [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
-
 
 #test
 delta = 1/np.sqrt(ts_idx.shape[0])
@@ -113,11 +119,11 @@ for i in range(ts_idx.shape[0]):
         idx = np.asarray(idx)
         val = np.asarray(val)
         x_t = x_feature[idx,:]
-        w = np.array(val.reshape(x_t.shape[0])
+        w = np.array(val.reshape(x_t.shape[0],1))
+        [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
+        click_n = click_n + utils.get_reward(w)
     else:
         continue
-    [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
-    click_n = click_n + utils.get_reward(w)
 
 result = click_n / cnt
 print "the reward is: %s" % result

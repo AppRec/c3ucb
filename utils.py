@@ -16,19 +16,22 @@ def update_stat(V,X,hist_X,hist_Y,W,lamb,delta,gama=1):
     newX = np.vstack((hist_X,X))
     numw = W.shape[0]
     for i in range(0,numw):
-        W[i,:] = W[i,:] * gama
+        if numw == 1:
+            W[i] = W[i]*gama
+        else:
+            W[i,:] = W[i,:] * gama
     newY = np.vstack((hist_Y,W))
     ishape = X.shape[1]
     tmpI = np.identity(ishape) * lamb
-    theta = np.dot(np.dot(np.linalg.inv(np.dot(np.transpose(X),X) + tmpI),np.transpose(X)),Y)
+    theta = np.dot(np.dot(np.linalg.inv(np.dot(np.transpose(nweX),newX) + tmpI),np.transpose(newX)),Y)
     R = 1
     d = V.shape[0]
     beta = R * np.sqrt(math.log(np.linalg.det(V))/(lamb**d * delta**2)) + np.sqrt(lamb)
     return newV,newX,newY,theta,beta
 
 def get_reward(W,gama=1):
-    rt = np.count_nonzero(W)
+    rt = 0
+    for i in range(W.shape[0]):
+        if W[i] != 0:
+            rt++
     return rt 
-
-
-
