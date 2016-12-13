@@ -1,46 +1,48 @@
-#! usr/bin/python
-# encoding issues: Hiad.txt can only open with 'utf-16'
 import io
 '''
 find from session record the apps exist in list 2, position 3~7
 '''
 def find_app_pool():
     d = 20161100
-    apps = []
-    uniq_apps=[]
-    for i in range(2):
+    apps = set()
+    for i in range(6):
         d += 1
-        filename = 'DataFile/Data_randomHiad_' + str(d) + '.txt'
+        filename = '../DataFile/Data_randomHiad_' + str(d) + '.txt'
 
         with io.open (filename,mode='r',encoding='utf-8') as f:
-            f.readline()
+            #f.readline()
             for line in f:
                 try:
-                    # print(line)
-                    device_id, app_id, date, oper_type, Hiad, listid, position = line.strip().split('\t')
+                   # print(line)
+                    device_id, app_id, date, oper_type, Hiad, blank, listid, position = line.strip().split('\t')
+                   # print app_id
                 except ValueError:
                     continue
                 try:
                     mainPage = int(listid)
                     pos = int(position)
+                    #print mainPage
+                    #print pos
                 except ValueError:
                     continue
                 else:
                     if (mainPage == 2):
-                        if (pos >=3 and pos <= 7):
-                            apps.append(app_id)
+                        if (Hiad == 'HiAd'):
+                            if (pos >=3 and pos <= 7):
+                                apps.add(app_id)
+
+        print "finish file %d" % i
     # print(apps)
     # print("the length of list of app is: {}".format(len(apps)))
-    seen = set()
-    for x in apps:
-        if x not in seen:
-            seen.add(x)
-            uniq_apps.append(x)
-    print('uniq_apps: ', uniq_apps)
+    #seen = set()
+    #for x in apps:
+       # if x not in seen:
+        #    seen.add(x)
+    #print('uniq_apps: ', uniq_apps)
     # print("the length of unique list is: {}".format(len(uniq_apps)))
     index = 1
     app_dict = {}
-    for i in uniq_apps:
+    for i in apps:
         app_dict[i] = index
         index += 1
     return app_dict
@@ -61,7 +63,7 @@ def app_category_num(filename, category_level):
                     continue
                 else:
                     apps.add(l[3]) # category_1 lies in 3rd column
-            
+
         if (category_level == 2):
             for line in f:
                 l = line.strip().split('\t')
@@ -71,7 +73,7 @@ def app_category_num(filename, category_level):
                     category_2 = l[5].split(" ") # category_2 lies in 5th column
                     for c in category_2:
                         if (c != 'null'):
-                            apps.add(c) 
+                            apps.add(c)
         for app in apps:
                 cnt += 1
                 app_dict[app] = cnt
@@ -90,18 +92,13 @@ def app_labels(filename):
                     label,weight = i.split(':')
                     labels.add(label)
     return list(labels)
-            
-def main():
-    # session_file = 'rand_Hiad.txt'
-    app_pool = find_app_pool()
-    # with io.open('app_index.txt',mode='wb') as f:
-    #    index = 1
-    #    for app in app_pool:
-    #        f.write(str(app) + ',' + str(index) + '\n')
-    #        index += 1
-    # print (app_pool)
-    # print(app_pool)
 
+def main():
+    app_pool = find_app_pool()
+    with open('../applist.txt', 'w') as f:
+        for key in app_pool:
+                f.write(str(key) + ',' + str(app_pool[key]) + '\n')
+    
     # app_file = 'app_feature.txt'
     # cat_1 = app_category_num(app_file, 1)
     # # print(cat_1)
@@ -110,4 +107,4 @@ def main():
     # print(labels)
 
 if __name__ == '__main__':
-    main()
+    main()                                                    
