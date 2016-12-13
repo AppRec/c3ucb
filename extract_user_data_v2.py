@@ -15,6 +15,8 @@ used_dict = {}
 dl_dict = {}
 search_dict = {}
 user_dict = {}
+user_dict2 = {}
+user_counter=0
 type_counter=0
 used_counter=0
 dl_counter=0
@@ -49,6 +51,8 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
         
         if l[0] not in user_dict:
             continue
+        user_counter += 1
+        user_dict2[l[0]] = user_counter
         download_apps = l[2].split(',') 
         used_apps = l[3].split(',')
         search_apps = l[4].split(',')
@@ -87,7 +91,7 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
         used_apps = l[3].split(',')
         search_apps = l[4].split(',')
         newl=[]
-        newl.append(user_dict[l[0]])
+        newl.append(user_dict2[l[0]])
         newl.append(type_dict[l[1]])
         #convert download_app && used_app && search_word into binary variable
         for key in dl_dict:
@@ -109,7 +113,7 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
 
 max = max([row[1] for row in processed_data])
 min = min([row[1] for row in processed_data])
-#print("Num of users: ", user_counter)
+print "Num of users: ", user_counter
 print 'Filtering completed at %.3f'%(time.clock()-start)
 
 with open("../user_feature.txt",'w') as f1:
