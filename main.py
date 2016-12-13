@@ -92,6 +92,7 @@ for i in range(tr_idx.shape[0]):
 
 #test
 delta = 1/np.sqrt(ts_idx.shape[0])
+cnt = 0
 for i in range(ts_idx.shape[0]):
     record = data[np.where(data[:, 0] == ts_idx[i])]
     u = user[np.where(user[:, 0] == record[0, 0])][0,1:]
@@ -101,14 +102,22 @@ for i in range(ts_idx.shape[0]):
         UCB[a] = utils.getUCB(theta, x_feature[a], beta, V)
     action = UCB.argsort()[-K:][::-1]
     reward = match_app.match(record, action)
+    idx=[]
+    val=[]
     if reward is not None:
-        idx = np.array(reward.keys())
+        for i in reward:
+            if reward[i]==1 or reward[i]==0
+                cnt +=1
+                idx.append(i)
+                val.append(reward[i])
+        idx = np.asarray(idx)
+        val = np.asarray(val)
         x_t = x_feature[idx,:]
-        w = np.array(reward.values()).reshape(x_t.shape[0])
+        w = np.array(val.reshape(x_t.shape[0])
     else:
         continue
     [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
     click_n = click_n + utils.get_reward(w)
 
-result = click_n / session_n*K
+result = click_n / cnt
 print "the reward is: %s" % result

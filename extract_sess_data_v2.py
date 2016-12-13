@@ -23,7 +23,7 @@ for i in range(0,1):
         for line in data:
             l = line.strip().split('\t')
             #delete rows where position<3 && position>7 and category='HiAd'in list = 2
-            if l[4] != 'HiAd' or int(l[6]) != 2 or int(l[7])<3 or int(l[7])>7:#HiAd
+            if l[4] != 'HiAd' or l[6] != '2' or int(l[7])<3 or int(l[7])>7:#HiAd
                 continue
             #delete date&time, HiAd;
             del l[2]
