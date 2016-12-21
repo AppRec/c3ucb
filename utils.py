@@ -35,5 +35,5 @@ def get_reward(W,gama=1):
     rt = 0
     for i in range(W.shape[0]):
         if W[i] != 0:
-            rt++
+            rt+=1
     return rt 
