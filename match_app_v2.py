@@ -15,7 +15,7 @@ def match(session, action):
         for i in range(len(action)):
             if (line[1] == action[i]):
                 #print "matched %f and %d" % (line[1],action[i])
-                if (int(line[2]) == 61):
+                if (int(line[2]) == 61 and match_record[i] == -1):
                     match_record[i] = 0
                 elif (int(line[2]) == 11 or int(line[2]) == 10):
                     match_record[i] = 1
