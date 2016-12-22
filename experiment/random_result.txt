@@ -1,0 +1,47 @@
+the reward of random recommend is: 0.228571428571
+click_n = 8
+total match number = 35
+the number of apps recommend are: 393
+the exploration rate is: 1.000000
+
+the reward of random recommend is: 0.294117647059
+click_n = 10
+total match number = 34
+the number of apps recommend are: 393
+the exploration rate is: 1.000000
+
+the reward of random recommend is: 0.21875
+click_n = 7
+total match number = 32
+the number of apps recommend are: 393
+the exploration rate is: 1.000000
+
+the reward of random recommend is: 0.162790697674
+click_n = 7
+total match number = 43
+the number of apps recommend are: 393
+the exploration rate is: 1.000000
+
+the reward of random recommend is: 0.275
+click_n = 11
+total match number = 40
+the number of apps recommend are: 393
+the exploration rate is: 1.000000
+
+the reward of random recommend is: 0.236842105263
+click_n = 9
+total match number = 38
+the number of apps recommend are: 393
+the exploration rate is: 1.000000
+
+the reward of random recommend is: 0.304347826087
+click_n = 7
+total match number = 23
+the number of apps recommend are: 393
+the exploration rate is: 1.000000
+
+the reward of random recommend is: 0.214285714286
+click_n = 9
+total match number = 42
+the number of apps recommend are: 393
+the exploration rate is: 1.000000
