@@ -1,0 +1,3 @@
+total number of click: 1928
+total number of record: 9648
+ctr = 0.199834
