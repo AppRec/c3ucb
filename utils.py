@@ -26,8 +26,8 @@ def update_stat(V,X,hist_X,hist_Y,W,lamb,delta,gama=1):
     theta = np.dot(np.dot(np.linalg.inv(np.dot(np.transpose(newX),newX) + tmpI),np.transpose(newX)),newY)
     R = 1
     d = V.shape[0]
-    #beta = R * np.sqrt(math.log(np.linalg.det(V)) - d * math.log(lamb) - 2 * math.log(delta)) + np.sqrt(lamb)
-    beta = R * np.sqrt(np.linalg.slogdet(V)[1] - d * np.log(lamb) -2 * np.log(delta)) + np.sqrt(lamb)
+    beta = R * np.sqrt(math.log(np.linalg.det(V)) - d * math.log(lamb) - 2 * math.log(delta)) + np.sqrt(lamb)
+    #beta = R * np.sqrt(np.linalg.slogdet(V)[1] - d * np.log(lamb) -2 * np.log(delta)) + np.sqrt(lamb)
     #beta = R * np.sqrt(np.linalg.slogdet(V)[1] - idV - 2 * np.log(delta)) + np.sqrt(lamb)
     return newV,newX,newY,theta,beta
 
