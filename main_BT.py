@@ -6,7 +6,7 @@ import time
 #read in file
 def readSess(i):
     tmp = []
-    filename = 'session_bootstrap' + str(i+1) + '.txt'
+    filename = '../session_bootstrap' + str(i+1) + '.txt'
     with open(filename, "r") as f:
         for line in f:
             line = line.strip().rstrip(',').split(',')
