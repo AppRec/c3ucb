@@ -18,6 +18,19 @@ def readSess(i):
             tmp.append(line)
         f.close()
     data = np.asarray(tmp)
+    return data
+    
+def readDict(i):
+    tmp = []
+    dictname = './sid_dict' + str(i+1) + '.txt'
+    with open(dictname, "r") as f:
+        for line in f:
+            line = line.strip().split(',')
+            for i in range(0,int(line[1])):
+                tmp.append(line[0])
+        f.close()
+    data = np.asarray(tmp)
+    return data
 
 tmp=[]
 with open("../user_feature.txt", "r") as f:
@@ -47,14 +60,15 @@ app = np.asarray(tmp)
 #print app.shape
 B=3
 reward_acc=0
-for i in range(0,B)
-    readSess(i)
+for i in range(0,B):
+    data = readSess(i)
+    sids = readDict(i)
     start = time.clock()
     pool_size = app.shape[0]
     user_row_n = user.shape[1]
     app_row_n = app.shape[1]
     d = int((user_row_n-1)*(app_row_n-1))
-    session_n = int(max(data[:, 0]))
+    session_n = sids.shape[0]
     train_ratio = 0.5
     gamma = 1
     #lamb = 5
@@ -67,13 +81,14 @@ for i in range(0,B)
     Y = np.zeros(1)
     x_feature = np.zeros((pool_size,d), dtype = np.float)
     UCB = np.zeros(pool_size, dtype = np.float)
-    session = np.zeros(session_n, dtype = np.float)
+    #session = np.zeros(session_n, dtype = np.float)
     K = 5
     click_n = 0
 
-    idx = np.random.permutation(session_n) +1
-    tr_idx = idx[:int(round(session_n * train_ratio))]
-    ts_idx = idx[int(round(session_n * train_ratio)):]
+    #idx = np.random.permutation(session_n) +1
+    sids = np.random.permutation(sids)
+    tr_idx = sids[:int(round(session_n * train_ratio))]
+    ts_idx = sids[int(round(session_n * train_ratio)):]
     #tr = session[idx[0:round(session_n * train_ratio)]]
     #ts = session[idx[round(session_n * train_ratio)]+1:session_n]
 
