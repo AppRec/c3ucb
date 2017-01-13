@@ -1,11 +1,12 @@
+'''
+find the apps exist in list 2, position 3~7 from session record 
+'''
 import io
-'''
-find from session record the apps exist in list 2, position 3~7
-'''
+
 def find_app_pool():
     d = 20161100
     apps = set()
-    for i in range(6):
+    for i in range(15):
         d += 1
         filename = '../DataFile/Data_randomHiad_' + str(d) + '.txt'
 
@@ -14,7 +15,7 @@ def find_app_pool():
             for line in f:
                 try:
                    # print(line)
-                    device_id, app_id, date, oper_type, Hiad, blank, listid, position = line.strip().split('\t')
+                   device_id, app_id, date, oper_type, Hiad, blank, listid, position = line.strip().split('\t')
                    # print app_id
                 except ValueError:
                     continue
@@ -34,13 +35,7 @@ def find_app_pool():
         print "finish file %d" % i
     # print(apps)
     # print("the length of list of app is: {}".format(len(apps)))
-    #seen = set()
-    #for x in apps:
-       # if x not in seen:
-        #    seen.add(x)
-    #print('uniq_apps: ', uniq_apps)
-    # print("the length of unique list is: {}".format(len(uniq_apps)))
-    index = 1
+    index = 0
     app_dict = {}
     for i in apps:
         app_dict[i] = index
