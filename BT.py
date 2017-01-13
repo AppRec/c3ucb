@@ -22,6 +22,7 @@ T = sess_amount; #related to user amount
 B = 3;
 for i in range(0,B):
     #filename = '../session_bootstrap' + str(i+1) + '.txt'
+    #dictname = '../sid_dict' + str(i+1) + '.txt'
     filename = './session_bootstrap' + str(i+1) + '.txt'
     dictname = './sid_dict' + str(i+1) + '.txt'
     id_dict = {}

@@ -22,7 +22,7 @@ def readSess(i):
     
 def readDict(i):
     tmp = []
-    dictname = './sid_dict' + str(i+1) + '.txt'
+    dictname = '../sid_dict' + str(i+1) + '.txt'
     with open(dictname, "r") as f:
         for line in f:
             line = line.strip().split(',')
@@ -61,6 +61,7 @@ app = np.asarray(tmp)
 B=3
 reward_acc=0
 for i in range(0,B):
+    print "Round " + str(i+1) + " starts!"
     data = readSess(i)
     sids = readDict(i)
     start = time.clock()
