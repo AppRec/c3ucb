@@ -10,10 +10,6 @@ def readSess(i):
     with open(filename, "r") as f:
         for line in f:
             line = line.strip().rstrip(',').split(',')
-            # py2
-            # data = map(float,data)
-            # py3
-            #print(line)
             line = list(map(float, line))
             tmp.append(line)
         f.close()
@@ -36,9 +32,6 @@ tmp=[]
 with open("../user_feature.txt", "r") as f:
     for line in f:
         line = line.strip().rstrip(',').split(',')
-        # py2
-        # user = map(float,user)
-        # py3
         line = list(map(float, line))
         tmp.append(line)
     f.close()
@@ -48,16 +41,12 @@ tmp=[]
 with open("../app_feature.txt", "r") as f:
     for line in f:
         line = line.strip().rstrip(',').split(',')
-        # py2
-        # user = map(float,user)
-        # py3
         line= list(map(float, line))
         tmp.append(line)
     f.close()
 app = np.asarray(tmp)
 
 #initialization
-#print app.shape
 B=3
 reward_acc=0
 for i in range(0,B):
@@ -70,14 +59,13 @@ for i in range(0,B):
     app_row_n = app.shape[1]
     d = int((user_row_n-1)*(app_row_n-1))
     session_n = sids.shape[0]
-    train_ratio = 0.5
+    train_ratio = 0.7
     gamma = 1
-    #lamb = 5
-    lamb = 1
+    lamb = 0.5
     theta = np.zeros(d)
     beta = 1
+    delta = 0.9
     V = lamb * np.eye(d)
-    #ldV = np.linalg.slogdet(V)[1]
     X = np.zeros((1, d), dtype = np.float)
     Y = np.zeros(1)
     x_feature = np.zeros((pool_size,d), dtype = np.float)
@@ -90,38 +78,30 @@ for i in range(0,B):
     sids = np.random.permutation(sids)
     tr_idx = sids[:int(round(session_n * train_ratio))]
     ts_idx = sids[int(round(session_n * train_ratio)):]
-    #tr = session[idx[0:round(session_n * train_ratio)]]
-    #ts = session[idx[round(session_n * train_ratio)]+1:session_n]
 
     #train
     app = app[:,1:]
-    delta = 1/np.sqrt(tr_idx.shape[0])
+    expl = np.zeros(pool_size)
     for i in range(tr_idx.shape[0]):
-       # print "this is train "+str(i)
         record = np.zeros(1)
         u = np.zeros(1)
         try:
             record = data[np.where(data[:, 0] == tr_idx[i])]
-           # print record
-
             u = user[np.where(user[:, 0] == record[0, 0])][0,1:]
         except IndexError:
             continue
         else:
-            #print tr_idx[i]
-
-            #print u[0:5]
             for a in range(pool_size):
                 x_feature[a] = np.outer(u, app[a, :]).reshape(1, d)
                 x_feature[a] = np.divide(x_feature[a], np.linalg.norm(x_feature[a]))
-                #print "this is x_feature"
-                #print '%.3f'%(time.clock()-start)
                 UCB[a] = utils.getUCB(theta, x_feature[a], beta, V)
                 #print "this is app "+str(a)+" UCB is " + str(UCB[a])
-                #print '%.3f'%(time.clock()-start)
             action = UCB.argsort()[-K:][::-1]
-            reward = match_app.match(record, action)
-            # print reward 
+            for ii in range(K):
+                if expl[action[ii]] == 0:
+                    expl[action[ii]] = 1
+            # print expl
+            reward = match_app.match(record, action+1)
             idx=[]
             val=[]
             if reward is not None:
@@ -131,17 +111,15 @@ for i in range(0,B):
                         val.append(reward[j])
                 idx = np.asarray(idx)
                 val = np.asarray(val)
-                x_t = x_feature[idx,:]
+                x_t = x_feature[idx-1,:]
                 w = np.array(val.reshape(x_t.shape[0],1))
                 print w
                 [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
 
             else:
-                #print "else"
                 continue
 
     #test
-    delta = 1/np.sqrt(ts_idx.shape[0])
     cnt = 0
     result = [0]
     for i in range(ts_idx.shape[0]):
@@ -157,8 +135,13 @@ for i in range(0,B):
                 x_feature[a] = np.outer(u, app[a, :]).reshape(1, d)
                 x_feature[a] = np.divide(x_feature[a], np.linalg.norm(x_feature[a]))
                 UCB[a] = utils.getUCB(theta, x_feature[a], beta, V)   
+                #print "this is app "+str(a)+" UCB is " + str(UCB[a])
             action = UCB.argsort()[-K:][::-1]
-            reward = match_app.match(record, action)
+            for ii in range(K):
+                if expl[action[ii]]==0:
+                    expl[action[ii]]=1
+            print expl
+            reward = match_app.match(record, action+1)
             idx=[]
             val=[]
             if reward is not None:
@@ -169,18 +152,22 @@ for i in range(0,B):
                         val.append(reward[j])
                 idx = np.asarray(idx)
                 val = np.asarray(val)
-                x_t = x_feature[idx,:]
+                x_t = x_feature[idx-1,:]
                 w = np.array(val.reshape(x_t.shape[0],1))
+                print w
                 [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
                 click_n = click_n + utils.get_reward(w)
                 result.append((float(click_n)/cnt))
                 print result
             else:
-                #print "else"
                 continue
                 
     print "the reward is: %s" % result
     print "cnt is: %s" % cnt
+    expl_n = sum(expl)
+    expl_n_rate = float(expl_n/pool_size)
+    print "expl_n is %s" % str(expl_n)
+    print "expl_rate is %s" % str(expl_n_rate)
     reward_acc += result
 
 reward_avg = reward_acc/B
