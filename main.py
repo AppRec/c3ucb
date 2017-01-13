@@ -35,7 +35,7 @@ app = np.asarray(tmp)
 pool_size = app.shape[0]
 user_row_n = user.shape[1]
 app_row_n = app.shape[1]
-d = int((user_row_n-1)*(app_row_n-1))
+d = int((user_row_n-1)*(app_row_nf))
 session_n = int(max(data[:, 0]))
 train_ratio = 0.7
 gamma = 1
@@ -52,9 +52,9 @@ session = np.zeros(session_n, dtype = np.float)
 K = 5
 click_n = 0
 
-idx = np.random.permutation(session_n) +1
-tr_idx = idx[:int(round(session_n * train_ratio))]
-ts_idx = idx[int(round(session_n * train_ratio)):]
+idex = np.random.permutation(session_n)
+tr_idx = idex[:int(round(session_n * train_ratio))]
+ts_idx = idex[int(round(session_n * train_ratio)):]
 
 #train
 app = app[:,1:]
@@ -78,7 +78,7 @@ for i in range(tr_idx.shape[0]):
             if expl[action[ii]] == 0:
                 expl[action[ii]] = 1
        # print expl
-        reward = match_app.match(record, action+1)
+        reward = match_app.match(record, action)
         idx=[]
         val=[]
         if reward is not None:
@@ -89,7 +89,7 @@ for i in range(tr_idx.shape[0]):
 
             idx = np.asarray(idx)
             val = np.asarray(val)
-            x_t = x_feature[idx-1,:]
+            x_t = x_feature[idx,:]
             w = np.array(val.reshape(x_t.shape[0],1))
             print w
             [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
@@ -118,7 +118,7 @@ for i in range(ts_idx.shape[0]):
             if expl[action[ii]] == 0:
                 expl[action[ii]] = 1
         print expl
-        reward = match_app.match(record, action+1)
+        reward = match_app.match(record, action)
         idx=[]
         val=[]
         if reward is not None:
@@ -129,7 +129,7 @@ for i in range(ts_idx.shape[0]):
                     val.append(reward[j])
             idx = np.asarray(idx)
             val = np.asarray(val)
-            x_t = x_feature[idx-1,:]
+            x_t = x_feature[idx,:]
             w = np.array(val.reshape(x_t.shape[0],1))
             print w
             [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
