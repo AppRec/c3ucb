@@ -3,8 +3,8 @@ import numpy as np
 
 def match(session, action):
     """
-    find matched apps in the session and all of them no matter click/down or not.
-    return none if all apps in action cannot match.
+    find matched apps in the session and return all of them no matter click/down or not.
+    return None if all apps in action cannot match.
     Parameters:
     session - a numpy nd-array
     action - a numpy array containing recommended apps
