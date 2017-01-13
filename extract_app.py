@@ -11,7 +11,7 @@ category1 = app_util.app_category_num(app_file, 1)
 category2 = app_util.app_category_num(app_file, 2)
 print 'finish calculate category......'
 labels = app_util.app_labels(app_file)
-outfile = open('../app_feature.txt','w+')
+outfile = open('../app_feature_origin.txt','w+')
 processed_data = []
 with io.open (app_file, mode='r', encoding='utf-8') as f:
     print "appInfo_sample opened..."
