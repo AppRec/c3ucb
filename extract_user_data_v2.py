@@ -116,7 +116,7 @@ min = min([row[1] for row in processed_data])
 print "Num of users: ", user_counter
 print 'Filtering completed at %.3f'%(time.clock()-start)
 
-with open("../user_feature.txt",'w') as f1:
+with open("../user_feature_origin.txt",'w') as f1:
     # f1.write("uid")
     # f1.write(',')
     # f1.write("device_type")
