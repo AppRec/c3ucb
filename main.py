@@ -10,7 +10,6 @@ with open("../session.txt", "r") as f:
         line = line.strip().rstrip(',').split(',')
         line = list(map(float, line))
         tmp.append(line)
-    f.close()
 data = np.asarray(tmp)
 tmp=[]
 
@@ -19,7 +18,6 @@ with open("../user_feature.txt", "r") as f:
         line = line.strip().rstrip(',').split(',')
         line = list(map(float, line))
         tmp.append(line)
-    f.close()
 user = np.asarray(tmp)
 tmp=[]
 
@@ -28,7 +26,6 @@ with open("../app_feature.txt", "r") as f:
         line = line.strip().rstrip(',').split(',')
         line= list(map(float, line))
         tmp.append(line)
-    f.close()
 app = np.asarray(tmp)
 
 #initialization
