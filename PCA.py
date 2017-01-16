@@ -24,6 +24,32 @@ def PCA(M,k):
         newm = np.dot(M,pc)
         return newm  #return the dimensional-decreased matrix
 
+# perform pca for app feature
+data = []
+countr = 0
+id = []
+with open("../app_feature_origin.txt",'r') as f:
+    for line in f:
+        countr += 1
+        l = line.strip().rstrip(',').split(',')
+        l = list(map(float, l))
+        data.append(int(l[1:]))
+        id.append(l[0])
+    f.close()
+
+A = np.asarray(data,dtype=np.float)
+C = PCA(A,dim)
+
+with open("../app_feature.txt",'w') as f:
+    for i in range(0,countr):
+        f.write(str(id[i])) 
+        for j in range(0,100):
+            f.write(',')
+            f.write(str(C[i,j].real))
+        f.write('\n')
+    f.close()
+print "app_feature done."
+
 # perform pca for user feature
 data = []
 countr = 0
@@ -51,29 +77,3 @@ with open("../user_feature.txt",'w') as f:
         f.write('\n')
     f.close()
 print "user_feature done."
-
-# perform pca for app feature
-data = []
-countr = 0
-id = []
-with open("../app_feature_origin.txt",'r') as f:
-    for line in f:
-        countr += 1
-        l = line.strip().rstrip(',').split(',')
-        l = list(map(float, l))
-        data.append(int(l[1:]))
-        id.append(l[0])
-    f.close()
-
-A = np.asarray(data,dtype=np.float)
-C = PCA(A,dim)
-
-with open("../app_feature.txt",'w') as f:
-    for i in range(0,countr):
-        f.write(str(id[i])) 
-        for j in range(0,100):
-            f.write(',')
-            f.write(str(C[i,j].real))
-        f.write('\n')
-    f.close()
-print "app_feature done."
