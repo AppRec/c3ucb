@@ -13,7 +13,8 @@ record_counter = 0
 user_counter = 0
 start = time.clock()
 t=0
-for i in range(0,1):
+days=15
+for i in range(days):
     print 'Start at time: %.3f'%(time.clock()-start)
     mydate += 1
     filename = '../DataFile/Data_randomHiad_' + str(mydate) + '.txt'
@@ -30,10 +31,10 @@ for i in range(0,1):
             del l[3]
             del l[3]
             processed_data.append(l)
-        f.close()	
+        	
 print "There are: ",record_counter,"rows"
 print 'Session Loaded at: %.3f'%(time.clock()-start)
-
+raw_input("press to ocntinue...")
 #delete all records of the same users who have no oper_type == 11||10	
 for line in processed_data:
     if line[0] not in optype_dict:
