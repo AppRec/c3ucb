@@ -34,8 +34,8 @@ with open("../app_feature_origin.txt",'r') as f:
         countr += 1
         l = line.strip().rstrip(',').split(',')
         l = list(map(float, l))
-        data.append(int(l[1:]))
-        id.append(l[0])
+        data.append(l[1:])
+        id.append(int(l[0]))
     f.close()
 
 A = np.asarray(data,dtype=np.float)
