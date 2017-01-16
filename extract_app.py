@@ -61,6 +61,10 @@ with io.open (app_file, mode='r', encoding='utf-8') as f:
                 #print "current app feature: %s" % app_feature
                 processed_data.append(app_feature)
                 print "len of proccessed data: %d" % len(processed_data)
+    
+    # rank processed_data by appid (0..n-1)
+    processed_data.sort(key = lambda x : x[0])
+    
     # normalize the value of app size
     max_size = max(row[1] for row in processed_data)
     min_size = min(row[1] for row in processed_data)
