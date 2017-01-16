@@ -1,0 +1,10 @@
+hadoop info====ERROR : Ended Job = job_1482328686023_474595 with errors
+hadoop info====Error: Error while processing statement: FAILED: Execution Error, return code 2 from org.apache.hadoop.hive.ql.exec.mr.MapRedTask (state=08S01,code=2)
+hadoop info====Closing: 0: jdbc:hive2://ha-cluster/default;zk.quorum=10.71.9.13,10.71.9.11,10.71.9.10,10.71.9.12,10.71.9.9;zk.port=24002;sasl.qop=auth-conf;auth=KERBEROS;principal=hive/hadoop.hadoop.com@HADOOP.COM
+hadoop info====. . . . . . . . . . . . . . . . . > 
+process sql is:::false
+process fail!!! exit
+Exception in thread "main" com.hibi.exception.GlobalException: process dw_Noah_HiadFlow_newVersionInfo_ds.sql fail!!! exit
+        at com.hibi.executeshell.VarProcessor.processData(VarProcessor.java:164)
+        at com.hibi.executeshell.VarProcessor.main(VarProcessor.java:111)
+exit fail......
