@@ -51,8 +51,8 @@ with io.open("../Result_use_down_search_20161030.txt",'r', encoding='UTF-8') as 
         
         if l[0] not in user_dict:
             continue
-        user_counter += 1
         user_dict2[l[0]] = user_counter
+        user_counter += 1
         download_apps = l[2].split(',') 
         used_apps = l[3].split(',')
         search_apps = l[4].split(',')
