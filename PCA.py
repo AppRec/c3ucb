@@ -44,7 +44,7 @@ C = PCA(A,dim)
 with open("../app_feature.txt",'w') as f:
     for i in range(0,countr):
         f.write(str(id[i])) 
-        for j in range(0,100):
+        for j in range(0,dim):
             f.write(',')
             f.write(str(C[i,j].real))
         f.write('\n')
@@ -71,7 +71,7 @@ C = PCA(A,dim)
 with open("../user_feature.txt",'w') as f:
     for i in range(0,countr):
         f.write(str(id[i]))
-        for j in range(0,100):
+        for j in range(0,dim):
             f.write(',')
             f.write(str(C[i,j].real))
         f.write('\n')
