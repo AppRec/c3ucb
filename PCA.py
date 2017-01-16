@@ -24,6 +24,7 @@ def PCA(M,k):
         newm = np.dot(M,pc)
         return newm  #return the dimensional-decreased matrix
 
+dim = 10
 # perform pca for app feature
 data = []
 countr = 0
@@ -53,7 +54,6 @@ print "app_feature done."
 # perform pca for user feature
 data = []
 countr = 0
-dim = 10
 id = []
 with open("../user_feature_origin.txt",'r') as f:
     for line in f:
