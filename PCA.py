@@ -27,6 +27,7 @@ def PCA(M,k):
 # perform pca for user feature
 data = []
 countr = 0
+dim = 10
 id = []
 with open("../user_feature_origin.txt",'r') as f:
     for line in f:
@@ -39,7 +40,7 @@ with open("../user_feature_origin.txt",'r') as f:
 
         
 A = np.asarray(data,dtype=np.float)
-C = PCA(A,100)
+C = PCA(A,dim)
 
 with open("../user_feature.txt",'w') as f:
     for i in range(0,countr):
@@ -65,7 +66,7 @@ with open("../app_feature_origin.txt",'r') as f:
     f.close()
 
 A = np.asarray(data,dtype=np.float)
-C = PCA(A,100)
+C = PCA(A,dim)
 
 with open("../app_feature.txt",'w') as f:
     for i in range(0,countr):
