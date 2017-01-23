@@ -168,7 +168,7 @@ for i in range(0,B):
     expl_n_rate = float(expl_n/pool_size)
     print "expl_n is %s" % str(expl_n)
     print "expl_rate is %s" % str(expl_n_rate)
-    reward_acc += result
+    reward_acc += result[-1]
 
 reward_avg = reward_acc/B
 print "the average reward is: %s" % reward_avg
