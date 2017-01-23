@@ -71,20 +71,16 @@ for i in range(0,B):
     Y = np.zeros(1)
     x_feature = np.zeros((pool_size,d), dtype = np.float)
     UCB = np.zeros(pool_size, dtype = np.float)
-    #session = np.zeros(session_n, dtype = np.float)
     K = 5
     click_n = 0
 
-    #idx = np.random.permutation(session_n) +1
     sids = np.random.permutation(sids)
     tr_idx = sids[:int(round(session_n * train_ratio))]
     ts_idx = sids[int(round(session_n * train_ratio)):]
 
-    # open file for storing log info 
-    cur_time = strftime("%Y%m%d_%H_%M_%S", localtime())
-    logFileName = 'main_BT_' + cur_time + '.txt'
+    cur_time = strftime("%Y%m%d_%H_%M_%S",loacltime())
+    logFileName = 'main_BT' + cur_time + '.txt'
     logFile = open(logFileName, 'w')
-
     #train
     app = app[:,1:]
     expl = np.zeros(pool_size)
@@ -107,7 +103,7 @@ for i in range(0,B):
                 if expl[action[ii]] == 0:
                     expl[action[ii]] = 1
             # print expl
-            reward = match_app.match(record, action+1)
+            reward = match_app.match(record, action)
             idx=[]
             val=[]
             if reward is not None:
@@ -117,7 +113,7 @@ for i in range(0,B):
                         val.append(reward[j])
                 idx = np.asarray(idx)
                 val = np.asarray(val)
-                x_t = x_feature[idx-1,:]
+                x_t = x_feature[idx,:]
                 w = np.array(val.reshape(x_t.shape[0],1))
                 print w
                 [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
@@ -147,7 +143,7 @@ for i in range(0,B):
                 if expl[action[ii]]==0:
                     expl[action[ii]]=1
             print expl
-            reward = match_app.match(record, action+1)
+            reward = match_app.match(record, action)
             idx=[]
             val=[]
             if reward is not None:
@@ -158,17 +154,16 @@ for i in range(0,B):
                         val.append(reward[j])
                 idx = np.asarray(idx)
                 val = np.asarray(val)
-                x_t = x_feature[idx-1,:]
+                x_t = x_feature[idx,:]
                 w = np.array(val.reshape(x_t.shape[0],1))
                 print w
                 [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
                 click_n = click_n + utils.get_reward(w)
                 result.append((float(click_n)/cnt))
-                print result
             else:
                 continue
                 
-    print >>logFile, "the reward is: %s" % result
+    print >>logFile, "the reward is: %s" % result[-1]
     print >>logFile, "cnt is: %s" % cnt
     expl_n = sum(expl)
     expl_n_rate = float(expl_n/pool_size)
