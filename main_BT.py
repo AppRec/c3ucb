@@ -2,6 +2,7 @@ import numpy as np
 import match_app
 import utils
 import time
+from time import localtime, strftime
 
 #read in file
 def readSess(i):
@@ -78,6 +79,11 @@ for i in range(0,B):
     sids = np.random.permutation(sids)
     tr_idx = sids[:int(round(session_n * train_ratio))]
     ts_idx = sids[int(round(session_n * train_ratio)):]
+
+    # open file for storing log info 
+    cur_time = strftime("%Y%m%d_%H_%M_%S", localtime())
+    logFileName = 'main_BT_' + cur_time + '.txt'
+    logFile = open(logFileName, 'w')
 
     #train
     app = app[:,1:]
@@ -162,13 +168,13 @@ for i in range(0,B):
             else:
                 continue
                 
-    print "the reward is: %s" % result
-    print "cnt is: %s" % cnt
+    print >>logFile, "the reward is: %s" % result
+    print >>logFile, "cnt is: %s" % cnt
     expl_n = sum(expl)
     expl_n_rate = float(expl_n/pool_size)
-    print "expl_n is %s" % str(expl_n)
-    print "expl_rate is %s" % str(expl_n_rate)
+    print >>logFile, "expl_n is %s" % str(expl_n)
+    print >>logFile, "expl_rate is %s" % str(expl_n_rate)
     reward_acc += result[-1]
 
 reward_avg = reward_acc/B
-print "the average reward is: %s" % reward_avg
+print >>logFile, "the average reward is: %s" % reward_avg
