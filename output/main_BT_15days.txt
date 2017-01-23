@@ -1,0 +1,6 @@
+test1:
+the reward is: 0.214285714286
+cnt is: 70
+expl_n is 319.0
+expl_rate is 0.759523809524
+the average reward is: 0.276721364221
