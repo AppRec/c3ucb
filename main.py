@@ -58,9 +58,12 @@ tr_idx = idex[:int(round(session_n * train_ratio))]
 ts_idx = idex[int(round(session_n * train_ratio)):]
 
 # open file for storing log info 
-cur_time = strftime("%Y%m%d_%H_%M_%S", localtime())
+cur_time = strftime("%Y%m%d_", localtime())
 logFileName = 'main_' + cur_time + '.txt'
-logFile = open(logFileName, 'w')
+logFile = open(logFileName, 'a+')
+print >>logFile, '\n\n'
+print >>logFile, '='*50
+
 
 #train
 app = app[:,1:]
@@ -83,7 +86,7 @@ for i in range(tr_idx.shape[0]):
         for ii in range(K):
             if expl[action[ii]] == 0:
                 expl[action[ii]] = 1
-       # print expl
+        #print expl
         reward = match_app.match(record, action)
         idx=[]
         val=[]
@@ -152,4 +155,4 @@ expl_n_rate = float(expl_n)/pool_size
 print >>logFile, "expl_n is %s" % str(expl_n)
 print >>logFile, "expl_rate is %s" % str(expl_n_rate)
 
-                                    
+logFile.close()                                    

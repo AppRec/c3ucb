@@ -2,14 +2,16 @@
 find the apps exist in list 2, position 3~7 from session record 
 '''
 import io
+from os import path
 
 def find_app_pool():
     d = 20161100
     apps = set()
-    for i in range(15):
+    for i in range(30):
         d += 1
         filename = '../DataFile/Data_randomHiad_' + str(d) + '.txt'
-
+        # check if file exists
+	if not path.exists(filename): continue
         with io.open (filename,mode='r',encoding='utf-8') as f:
             #f.readline()
             for line in f:

@@ -56,7 +56,7 @@ session = np.zeros(session_n, dtype = np.float)
 K = 5
 click_n = 0
 
-idx = np.random.permutation(session_n) +1
+idx = np.random.permutation(session_n)
 tr_idx = idx[:int(round(session_n * train_ratio))]
 ts_idx = idx[int(round(session_n * train_ratio)):]
 
@@ -64,7 +64,7 @@ ts_idx = idx[int(round(session_n * train_ratio)):]
 cur_time = strftime("%Y%m%d_", localtime())
 logFileName = 'main_no_user_' + cur_time + '.txt'
 logFile = open(logFileName, 'a+')
-print '\n\n'
+print >>logFile, '\n\n'
 print >>logFile, '='*50
 
 #train
@@ -89,8 +89,8 @@ for i in range(tr_idx.shape[0]):
         for ii in range(K):
             if expl[action[ii]] == 0:
                 expl[action[ii]] = 1
-        print expl
-        reward = match_app.match(record, action+1)
+        # print expl
+        reward = match_app.match(record, action)
         idx=[]
         val=[]
         if reward is not None:
@@ -101,7 +101,7 @@ for i in range(tr_idx.shape[0]):
 
             idx = np.asarray(idx)
             val = np.asarray(val)
-            x_t = x_feature[idx-1,:]
+            x_t = x_feature[idx,:]
             w = np.array(val.reshape(x_t.shape[0],1))
             #print w
             [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
@@ -130,8 +130,8 @@ for i in range(ts_idx.shape[0]):
         for ii in range(K):
             if expl[action[ii]] == 0:
                 expl[action[ii]] = 1
-        print expl
-        reward = match_app.match(record, action+1)
+        # print expl
+        reward = match_app.match(record, action)
         idx=[]
         val=[]
         if reward is not None:
@@ -142,7 +142,7 @@ for i in range(ts_idx.shape[0]):
                     val.append(reward[j])
             idx = np.asarray(idx)
             val = np.asarray(val)
-            x_t = x_feature[idx-1,:]
+            x_t = x_feature[idx,:]
             w = np.array(val.reshape(x_t.shape[0],1))
             #print w
             [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta)
@@ -159,4 +159,4 @@ expl_n_rate = float(expl_n)/pool_size
 print >>logFile, "expl_n is %s" % str(expl_n)
 print >>logFile, "expl_rate is %s" % str(expl_n_rate)
 
-                                    
+logFile.close()
