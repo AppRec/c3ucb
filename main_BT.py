@@ -51,7 +51,7 @@ def main(lamb, R):
     #initialization
     B=3
     reward_acc=0
-    cur_time = strftime("%Y%m%d_",loacltime())
+    cur_time = strftime("%Y%m%d_",localtime())
     logFileName = '../LogFile/main_BT' + cur_time + '.txt'
     logFile = open(logFileName, 'w')
     print >>logFile, '\n\n'
@@ -93,7 +93,7 @@ def main(lamb, R):
             record = np.zeros(1)
             u = np.zeros(1)
             try:
-                record = data[np.where(data[:, 0] == tr_idx[i])]
+                record = data[np.where(data[:, 0] == float(tr_idx[i]))]
                 u = user[np.where(user[:, 0] == record[0, 0])][0,1:]
             except IndexError:
                 continue
@@ -133,7 +133,7 @@ def main(lamb, R):
             record = np.zeros(1)
             u = np.zeros(1)
             try:
-                record = data[np.where(data[:, 0] == ts_idx[i])]
+                record = data[np.where(data[:, 0] == float(ts_idx[i]))]
                 u = user[np.where(user[:, 0] == record[0, 0])][0,1:]
             except IndexError:
                 continue
@@ -183,5 +183,5 @@ def main(lamb, R):
     
 if '__name__' == '__main__':
     main(lamb=10,R=1)
-    main(lamb=50,R=1)
-    main(lamb=0.1,R=0.1)
+    #main(lamb=50,R=1)
+    #main(lamb=0.1,R=0.1)
