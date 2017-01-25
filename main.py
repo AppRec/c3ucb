@@ -59,7 +59,7 @@ def main(lamb, R):
 
     # open file for storing log info 
     cur_time = strftime("%Y%m%d_", localtime())
-    logFileName = 'main_' + cur_time + '.txt'
+    logFileName = '../LogFile/main_' + cur_time + '.txt'
     logFile = open(logFileName, 'a+')
     print >>logFile, '\n\n'
     print >>logFile, '='*50
