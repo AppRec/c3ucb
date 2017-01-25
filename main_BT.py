@@ -78,8 +78,8 @@ for i in range(0,B):
     tr_idx = sids[:int(round(session_n * train_ratio))]
     ts_idx = sids[int(round(session_n * train_ratio)):]
 
-    cur_time = strftime("%Y%m%d_%H_%M_%S",loacltime())
-    logFileName = 'main_BT' + cur_time + '.txt'
+    cur_time = strftime("%Y%m%d_",loacltime())
+    logFileName = '../LogFile/main_BT' + cur_time + '.txt'
     logFile = open(logFileName, 'w')
     #train
     app = app[:,1:]
