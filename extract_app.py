@@ -12,6 +12,7 @@ category2 = app_util.app_category_num(app_file, 2)
 print 'finish calculate category......'
 labels = app_util.app_labels(app_file)
 outfile = open('../app_feature_origin.txt','w+')
+logfile = open('../LogFile/30Days_apps_info.txt','a+')
 processed_data = []
 with io.open (app_file, mode='r', encoding='utf-8') as f:
     print "appInfo_sample opened..."
@@ -69,10 +70,11 @@ with io.open (app_file, mode='r', encoding='utf-8') as f:
         for feature in line:
            outfile.write(str(feature) + ',')
         outfile.write('\n')
-    print "len of processed data: %d" % len(processed_data)
-    print "one of the app feature: %s" % processed_data[3]
-    print "there are %d apps." % len(processed_data)
-    print "len of each app feature: %d" % len(processed_data[3])
+    print >>logfile, "="*40
+    print >>logfile, "len of processed data: %d" % len(processed_data)
+    print >>logfile, "one of the app feature: %s" % processed_data[3]
+    print >>logfile, "there are %d apps." % len(processed_data)
+    print >>logfile, "len of each app feature: %d" % len(processed_data[3])
 outfile.close()
 
              
