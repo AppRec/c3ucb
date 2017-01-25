@@ -76,6 +76,6 @@ with io.open (app_file, mode='r', encoding='utf-8') as f:
     print >>logfile, "there are %d apps." % len(processed_data)
     print >>logfile, "len of each app feature: %d" % len(processed_data[3])
 outfile.close()
-
-             
+logfile.close()
+     
                                        
