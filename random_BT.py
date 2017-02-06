@@ -1,7 +1,9 @@
 # randomly recommend 5 apps and compute rewards
 
 import numpy as np
-import match_app_v2 as match_app
+import match_app
+import time
+from time import localtime, strftime
 
 def readSess(i):
     tmp = []
@@ -34,7 +36,7 @@ def random_app(number=K):
     return rec
 
 tmp = []
-with open("../DataFile/app_feature.txt", "r") as f:
+with open("../app_feature.txt", "r") as f:
     for line in f:
         line = line.strip().rstrip(',').split(',')
         line= list(map(float, line))
@@ -65,14 +67,14 @@ for i in range(0,B):
     cnt = 0
     click_n = 0
 
-    tr_idx = sids[:int(round(session_n * train_ratio))]
-    ts_idx = sids[int(round(session_n * train_ratio)):]
+    tr_idx = sids[:int(round(session_n * ratio))]
+    ts_idx = sids[int(round(session_n * ratio)):]
     
     expl = np.zeros(pool_size)
     # randomly get session
     for i in range(ts_idx.shape[0]):
         record = data[np.where(data[:, 0] == ts_idx[i])]
-        action = random_app()
+        action = random_app(K)
         reward = match_app.match(record, action)
         if reward is not None:
             for j in reward:
