@@ -54,10 +54,10 @@ print >>logFile, '\n\n'
 print >>logFile, '='*50
 print >>logFile, '\n\n'
 
-for i in range(0,B):
-    print "Round " + str(i+1) + " starts!"
-    data = readSess(i)
-    sids = readDict(i)
+for t in range(0,B):
+    print "Round " + str(t+1) + " starts!"
+    data = readSess(t)
+    sids = readDict(t)
     # initialization
     session_n = sids.shape[0]
     pool_size = app.shape[0]

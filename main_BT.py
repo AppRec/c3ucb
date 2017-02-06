@@ -51,17 +51,18 @@ def main(lamb, R):
     #initialization
     B=3
     reward_acc=0
+    cnt_acc=0
     cur_time = strftime("%Y%m%d_",localtime())
-    logFileName = '../LogFile/main_BT' + cur_time + '.txt'
+    logFileName = '../LogFile/main_BT_' + cur_time + '.txt'
     logFile = open(logFileName, 'w')
     print >>logFile, '\n\n'
     print >>logFile, '='*20
     print >>logFile, 'experiment parameters: lambda=%f, R=%f' % (lamb, R)
     print >>logFile, '\n\n'
-    for i in range(0,B):
-        print "Round " + str(i+1) + " starts!"
-        data = readSess(i)
-        sids = readDict(i)
+    for t in range(0,B):
+        print "Round " + str(t+1) + " starts!"
+        data = readSess(t)
+        sids = readDict(t)
         start = time.clock()
         pool_size = app.shape[0]
         user_row_n = user.shape[1]
@@ -175,8 +176,11 @@ def main(lamb, R):
         print >>logFile, "expl_n is %s" % str(expl_n)
         print >>logFile, "expl_rate is %s" % str(expl_n_rate)
         reward_acc += result[-1]
+        cnt_acc += cnt
 
     reward_avg = reward_acc/B
+    cnt_avg = cnt_acc/B
+    print >>logFile, "the average cnt is: %s" % cnt_avg
     print >>logFile, "the average reward is: %s" % reward_avg
     
     logFile.close()
