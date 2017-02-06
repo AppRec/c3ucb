@@ -73,7 +73,7 @@ for t in range(0,B):
     expl = np.zeros(pool_size)
     # randomly get session
     for i in range(ts_idx.shape[0]):
-        record = data[np.where(data[:, 0] == ts_idx[i])]
+        record = data[np.where(data[:, 0] == float(ts_idx[i]))]
         action = random_app(K)
         reward = match_app.match(record, action)
         if reward is not None:
