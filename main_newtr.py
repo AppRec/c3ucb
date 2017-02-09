@@ -80,9 +80,11 @@ def main(lamb, R):
         else:
             val=[]
             for a in range(pool_size):
+                #get all apps from the session data of one user
                 if app[a,0] in record[:,1]:
                     x_feature[a] = np.outer(user_feature, app[a, :]).reshape(1, d)
                     x_feature[a] = np.divide(x_feature[a], np.linalg.norm(x_feature[a]))
+                    #get the user's feedback to one app
                     feedback = record[np.where(record[:,1] == app[a,0])][:,2]
                     if 10 in feedback or 11 in feedback:
                         val.append(1)
