@@ -59,7 +59,7 @@ def main(lamb, R):
 
     # open file for storing log info 
     cur_time = strftime("%Y%m%d_", localtime())
-    logFileName = '../LogFile/main_newtr_' + cur_time + '.txt'
+    logFileName = '../LogFile/main_' + cur_time + '.txt'
     logFile = open(logFileName, 'a+')
     print >>logFile, '\n\n'
     print >>logFile, '='*50
@@ -79,10 +79,12 @@ def main(lamb, R):
             continue
         else:
             val=[]
+            idx=[]
             for a in range(pool_size):
                 #get all apps from the session data of one user
                 if app[a,0] in record[:,1]:
-                    x_feature[a] = np.outer(user_feature, app[a, :]).reshape(1, d)
+                    idx.append(a)
+                    x_feature[a] = np.outer(user_feature, app[a, 1:]).reshape(1, d)
                     x_feature[a] = np.divide(x_feature[a], np.linalg.norm(x_feature[a]))
                     #get the user's feedback to one app
                     feedback = record[np.where(record[:,1] == app[a,0])][:,2]
@@ -90,14 +92,13 @@ def main(lamb, R):
                         val.append(1)
                     else:
                         val.append(0)
-                val = np.asarray(val)
-                print val.shape
-                w = np.array(val.reshape(x_feature.shape[0],1))
-                # print w
-                [V, X, Y, theta, beta] = utils.update_stat(V, x_feature, X, Y, w, lamb, delta, R)
-
-            else:
-                continue
+            val = np.asarray(val)
+            print val
+            idx = np.asarray(idx)
+            x_t = x_feature[idx,:]
+            w = np.array(val.reshape(val.shape[1],1))
+            # print w
+            [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta, R)
     #test
     cnt = 0
     result = [0]
