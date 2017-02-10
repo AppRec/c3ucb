@@ -59,7 +59,7 @@ def main(lamb, R):
 
     # open file for storing log info 
     cur_time = strftime("%Y%m%d_", localtime())
-    logFileName = '../LogFile/main_' + cur_time + '.txt'
+    logFileName = '../LogFile/main_newtr_' + cur_time + '.txt'
     logFile = open(logFileName, 'a+')
     print >>logFile, '\n\n'
     print >>logFile, '='*50
@@ -91,6 +91,7 @@ def main(lamb, R):
                     else:
                         val.append(0)
                 val = np.asarray(val)
+                print val.shape
                 w = np.array(val.reshape(x_feature.shape[0],1))
                 # print w
                 [V, X, Y, theta, beta] = utils.update_stat(V, x_feature, X, Y, w, lamb, delta, R)
