@@ -112,7 +112,7 @@ def main(lamb, R):
             continue
         else:
             for a in range(pool_size):
-                x_feature[a] = np.outer(u, app[a, :]).reshape(1, d)
+                x_feature[a] = np.outer(u, app[a,1:]).reshape(1, d)
                 x_feature[a] = np.divide(x_feature[a], np.linalg.norm(x_feature[a]))
                 UCB[a] = utils.getUCB(theta, x_feature[a], beta, V)
                 # print "this is app "+str(a)+" UCB is " + str(UCB[a])
