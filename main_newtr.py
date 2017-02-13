@@ -96,7 +96,7 @@ def main(lamb, R):
             print val
             idx = np.asarray(idx)
             x_t = x_feature[idx,:]
-            w = np.array(val.reshape(val.shape[1],1))
+            w = np.array(val.reshape(val.shape[0],1))
             # print w
             [V, X, Y, theta, beta] = utils.update_stat(V, x_t, X, Y, w, lamb, delta, R)
     #test
