@@ -16,6 +16,7 @@ def main():
     with open('../applist.txt','r')  as f:
         for line in f:
             l = line.strip().split(',')
+            l[1] = int(l[1])
             if l[1] not in aid_dict:
                 aid_dict[l[1]] = l[0]
         f.close()
