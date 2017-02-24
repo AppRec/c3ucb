@@ -67,7 +67,7 @@ def main():
         for app in app_dict:
             app_ratio = float(app_dict[app][1])/app_dict[app][0]
             app_dict[app].append(app_ratio)
-        app_dict = sorted(app_dict.items(), key = lambda x:x[1][2], reverse = True)
+        app_dict = sorted(app_dict.items(), key = lambda x:x[1][3], reverse = True)
         for app in app_dict:
             #f1.write(str(app) + ',' + str(app_dict[app][0]) + ',' + str(app_dict[app][1]) + ',' + str(app_dict[app][2]))
             #f1.write(str(app).decode('utf-8'))
@@ -79,7 +79,7 @@ def main():
         for pos in position_dict:
             p_ratio = float(position_dict[pos][1])/position_dict[pos][0]
             position_dict[pos].append(p_ratio)
-        position_dict = sorted(position_dict.items(), key = lambda x:x[1][2], reverse = True)
+        position_dict = sorted(position_dict.items(), key = lambda x:x[1][3], reverse = True)
         for pos in position_dict:  
             #f2.write(str(pos) + ',' + str(position_dict[pos][0]) + ',' + str(position_dict[pos][1]) + ',' + str(position_dict[pos][2]))
             f2.write(str(pos))
