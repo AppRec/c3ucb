@@ -27,7 +27,8 @@ def main():
         for line in f:
             l = line.strip().split('\t')
             if l[0] not in name_dict:
-                name_dict[l[0]] = unicode(l[2]).encode('utf-8')
+                #name_dict[l[0]] = unicode(l[2]).encode('utf-8')
+                name_dict[1][0] = l[2]
         f.close()
     
     for row in data:
@@ -69,7 +70,8 @@ def main():
         app_dict = sorted(app_dict.items(), key = lambda x:x[1][2], reverse = True)
         for app in app_dict:
             #f1.write(str(app) + ',' + str(app_dict[app][0]) + ',' + str(app_dict[app][1]) + ',' + str(app_dict[app][2]))
-            f1.write(str(app).decode('utf-8'))
+            #f1.write(str(app).decode('utf-8'))
+            f1.write(str(app))
             f1.write('\n')
         f1.close()
     with open('../LogFile/pos_ctr.txt','w') as f2:
