@@ -72,7 +72,12 @@ def main():
             #f1.write(str(app) + ',' + str(app_dict[app][0]) + ',' + str(app_dict[app][1]) + ',' + str(app_dict[app][2]))
             #f1.write(str(app).decode('utf-8'))
             for idx, i in enumerate(app):
-                if idx == 2: f1.write(i.decode('utf-8') + ', ')
+                if idx == 1: 
+                    for list_idx, j in enumerate(i):
+                        if list_idx==2:
+                            f1.write(i.decode('utf-8') + ', ')
+                        else: 
+                            f1.write(i + ', ')
                 else: f1.write(i + ', ')
             f1.write('\n')
         f1.close()
