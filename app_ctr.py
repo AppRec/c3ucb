@@ -4,6 +4,7 @@ import time
 def main():
     #read in file
     data = []
+    name_dict = {}
     aid_dict ={}
     app_dict = {}
     position_dict = {}
@@ -21,6 +22,12 @@ def main():
                 aid_dict[l[1]] = l[0]
         f.close()
     #print(aid_dict)
+    with open('../combine_AppInfo.txt','r') as f:
+        for line in f:
+            l = line.strip().split('\t')
+            if l[0] not in name_dict:
+                name_dict[l[0]] = l[2]
+        f.close()
     
     for row in data:
         aid = aid_dict[row[1]]
@@ -35,6 +42,7 @@ def main():
                 info.append(0)
             else:
                 info.append(1)
+            info.append(name_dict[aid])
             app_dict[aid] = info
         
             
@@ -50,7 +58,7 @@ def main():
             else:
                 info.append(1)
             position_dict[row[-1]] = info
-            
+           
             
     with open('../LogFile/app_ctr.txt','w') as f1:
         f1.write('*'*20+'\n')
