@@ -71,7 +71,9 @@ def main():
         for app in app_dict:
             #f1.write(str(app) + ',' + str(app_dict[app][0]) + ',' + str(app_dict[app][1]) + ',' + str(app_dict[app][2]))
             #f1.write(str(app).decode('utf-8'))
-            f1.write(str(app))
+            for idx, i in enumerate(app):
+                if idx == 2: f1.write(i.decode('utf-8') + ', ')
+                else: f1.write(i + ', ')
             f1.write('\n')
         f1.close()
     with open('../LogFile/pos_ctr.txt','w') as f2:
