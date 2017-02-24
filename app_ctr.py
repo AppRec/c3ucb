@@ -28,7 +28,7 @@ def main():
             l = line.strip().split('\t')
             if l[0] not in name_dict:
                 #name_dict[l[0]] = unicode(l[2]).encode('utf-8')
-                name_dict[l][0] = l[2]
+                name_dict[l[0]] = l[2]
         f.close()
     
     for row in data:
