@@ -63,21 +63,9 @@ for i in range(0,len(processed_data2)):
     processed_data2[i][0] = user_dict[processed_data2[i][0]] 
 #print 'userlist Loaded at: %.3f'%(time.clock()-start)	
 print ('User amount is: ', user_counter)
-
-with open("../userlist.txt",'w') as f3:
-    for key in user_dict:
-        if int(time.clock()-start) / 30 > t:
-                t = int(time.clock()-start) / 30
-                #print '30 seconds left'
-        f3.write(key)
-        f3.write(',')
-        f3.write(str(user_dict[key]))
-        f3.write('\n')
-    #print 'userlist.txt outputed at: %.3f'%(time.clock()-start)
-    f3.close()
 	
 #print(processed_data2)
-with open("../session.txt", 'w') as f1:
+with open("../session_all.txt", 'w') as f1:
     #print '%.3f'%(time.clock()-start)
     for line in processed_data2:
         for e in line:
