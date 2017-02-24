@@ -60,7 +60,7 @@ def main():
         app_dict = sorted(app_dict.items(), key = lambda x:x[1][2], reverse = True)
         for app in app_dict:
             #f1.write(str(app) + ',' + str(app_dict[app][0]) + ',' + str(app_dict[app][1]) + ',' + str(app_dict[app][2]))
-            f1.write(app)
+            f1.write(str(app))
             f1.write('\n')
         f1.close()
     with open('../LogFile/pos_ctr.txt','w') as f2:
@@ -71,7 +71,7 @@ def main():
         position_dict = sorted(position_dict.items(), key = lambda x:x[1][2], reverse = True)
         for pos in position_dict:  
             #f2.write(str(pos) + ',' + str(position_dict[pos][0]) + ',' + str(position_dict[pos][1]) + ',' + str(position_dict[pos][2]))
-            f2.write(pos)
+            f2.write(str(pos))
             f2.write('\n')
         f1.close()
     
