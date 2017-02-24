@@ -1,4 +1,3 @@
-#l[0]<- uid, l[1]<- appid, l[2]<- date&time, l[3]<- oper_type, l[4]<- category, l[5]<- '', l[6]<- listid, l[7]<- position
 import sys
 import time
 
@@ -8,13 +7,13 @@ def main():
     aid_dict ={}
     app_dict = {}
     position_dict = {}
-    with open("./session.txt", "r") as f:
+    with open("../session.txt", "r") as f:
         for line in f:
             line = line.strip().rstrip(',').split(',')
             line = list(map(int, line))
             data.append(line)
         f.close()
-    with open('./applist.txt','r')  as f:
+    with open('../applist.txt','r')  as f:
         for line in f:
             l = line.strip().split(',')
             if l[1] not in aid_dict:
@@ -36,18 +35,18 @@ def main():
             else:
                 info.append(1)
             app_dict[aid] = info
-        if row[1] in app_dict:
-            app_dict[row[1]][0]+=1
-            if(row[2]==11 or row[2]==10):
-                app_dict[row[1]][1]+=1
-        else:
-            info=[]
-            info.append(1)
-            if(row[2]==61):
-                info.append(0)
-            else:
-                info.append(1)
-            app_dict[row[1]] = info
+        # if row[1] in app_dict:
+            # app_dict[row[1]][0]+=1
+            # if(row[2]==11 or row[2]==10):
+                # app_dict[row[1]][1]+=1
+        # else:
+            # info=[]
+            # info.append(1)
+            # if(row[2]==61):
+                # info.append(0)
+            # else:
+                # info.append(1)
+            # app_dict[row[1]] = info
             
         if row[-1] in position_dict:
             position_dict[row[-1]][0]+=1
