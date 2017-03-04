@@ -28,6 +28,46 @@ def match(session, action):
         return None
     return match_kv
 
+def get_all_ctr(appListFile, appCtrFile):
+    listF = open(appListFile,'r') # 459 apps in total
+    ctrF = open(appCtrFile,'r') # 412 apps in total(in valid session)
+    apps = dict() # key: app name, value: app index
+    appCtr = dict() # key: app index, value: ctr
+
+    for line in listF:
+        l = line.strip().split(',')
+        apps[l[0]] = int(l[1])
+    listF.close()
+
+    for line in ctrF:
+        l = line.strip().split(',')
+        if len(l) == 4:
+            app_idx = apps[l[0]]
+            appCtr[app_idx] = float(l[-1])
+    ctrF.close()
+
+    return appCtr
+
+
+def genCtr(action):
+    """
+    generate the action's reward based on apps' ctr
+    """
+    actReward = dict() # key: app idx, value: 0 or 1 
+
+    appCtr = get_all_ctr(appListFile='../applist.txt', \
+                         appCtrFile='../app_ctr.txt')
+
+    for a in action:
+        ctr = appCtr[a]
+        
+        val = np.random.choice(2, 1, p=[1-ctr, ctr]) 
+        
+        actReward[a] = val # P(val=1)==ctr, P(val=0)==1-ctr 
+
+    return actReward
+
+
 
 def main():
         session = np.array([[1,11.0,61,2,4],
