@@ -6,14 +6,17 @@ import app_util
 
 apps = app_util.find_app_pool()
 print 'finish reading applist......'
+
 app_file = '../combine_AppInfo.txt'
 category1 = app_util.app_category_num(app_file, 1)
 category2 = app_util.app_category_num(app_file, 2)
 print 'finish calculate category......'
+
 labels = app_util.app_labels(app_file)
 outfile = open('../app_feature_origin.txt','w+')
 logfile = open('../LogFile/30Days_apps_info.txt','a+')
 processed_data = []
+
 with io.open (app_file, mode='r', encoding='utf-8') as f:
     print "appInfo_sample opened..."
     for line in f:
@@ -34,11 +37,13 @@ with io.open (app_file, mode='r', encoding='utf-8') as f:
                 app_size = int(line[4])
                 app_feature.append(app_id)
                 app_feature.append(app_size)
+                
                 for key in category1:
                     if (key == line[3]):
                         app_feature.append(1)
                     else:
                         app_feature.append(0)
+                
                 for key in category2:
                     if line[5].find(key) >= 0:  # key in the category_2 of this app
                         app_feature.append(1)
@@ -62,19 +67,23 @@ with io.open (app_file, mode='r', encoding='utf-8') as f:
                 #print "current app feature: %s" % app_feature
                 processed_data.append(app_feature)
                 print "len of proccessed data: %d" % len(processed_data)
+   
     # normalize the value of app size
     max_size = max(row[1] for row in processed_data)
     min_size = min(row[1] for row in processed_data)
+    
     for line in processed_data:
         line[1] = round((line[1]-min_size)/(max_size-min_size),3)
         for feature in line:
            outfile.write(str(feature) + ',')
         outfile.write('\n')
+    
     print >>logfile, "="*40
     print >>logfile, "len of processed data: %d" % len(processed_data)
     print >>logfile, "one of the app feature: %s" % processed_data[3]
     print >>logfile, "there are %d apps." % len(processed_data)
     print >>logfile, "len of each app feature: %d" % len(processed_data[3])
+
 outfile.close()
 logfile.close()
      
