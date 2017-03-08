@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.linalg import pinv
 import match_app
 import utils
 import random
@@ -102,7 +103,8 @@ def main(lamb, R):
             X.vstack(X, x_t)
             Y.vstack(Y, w)
     #normal equaltion
-    theta = np.dot(np.dot(np.linalg.pinv(np.dot(X.transpose(), X)),Xt),Y)
+    #theta = np.dot(np.dot(np.linalg.pinv(np.dot(X.transpose(), X)),Xt),Y)
+    theta = np.dot(np.dot(pinv(X.T.dot(X), X), X.T), Y)
     
     #test
     cnt = 0
