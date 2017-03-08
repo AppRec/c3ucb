@@ -3,15 +3,15 @@ import sys
 import os
 
 mydate = 20161100
-days = 2
+days = 30
 app_pool = {}
 whole_pool = []
 whole_pool2 = []
 app_counter = 0
 for i in range(0,days):
     mydate += 1
-    #filename = '../DataFile/Data_randomHiad_' + str(mydate) + '.txt'
-    filename = './Data_randomHiad_' + str(mydate) + '.txt'
+    filename = '../DataFile/Data_randomHiad_' + str(mydate) + '.txt'
+    #filename = './Data_randomHiad_' + str(mydate) + '.txt'
     if os.path.exists(filename) == False:
         print 'skip day: %s' % str(mydate)
         continue
@@ -44,7 +44,7 @@ for i in range(0,days):
 # print(inter)
 # print(len(inter))
 
-with open('./dynamic_app_info.txt','w') as f:
+with open('../LogFile/dynamic_app_info.txt','w') as f:
     f.write('Date')
     f.write('\t')
     for app in app_pool:
