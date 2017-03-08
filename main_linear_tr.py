@@ -100,8 +100,8 @@ def main(lamb, R):
             idx = np.asarray(idx)
             x_t = x_feature[idx,:]
             w = np.array(val.reshape(val.shape[0],1))
-            X.vstack(X, x_t)
-            Y.vstack(Y, w)
+            np.vstack(X, x_t)
+            np.vstack(Y, w)
     #normal equaltion
     #theta = np.dot(np.dot(np.linalg.pinv(np.dot(X.transpose(), X)),Xt),Y)
     theta = np.dot(np.dot(pinv(X.T.dot(X), X), X.T), Y)
@@ -123,7 +123,7 @@ def main(lamb, R):
             for a in range(pool_size):
                 x_feature[a] = np.outer(u, app[a, 1:]).reshape(1, d)
                 x_feature[a] = np.divide(x_feature[a], np.linalg.norm(x_feature[a]))
-                UCB[a] = utils.getUCB(theta, x_feature[a], beta, V)
+                UCB[a] = utils.getUCB_unbound(theta, x_feature[a], beta, V)
                 # print "this is app "+str(a)+" UCB is " + str(UCB[a])
             action = UCB.argsort()[-K:][::-1]
             for ii in range(K):
