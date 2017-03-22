@@ -15,12 +15,20 @@ public class Parameters {
     protected Matrix V; // matrix, shape = [d][d] 
     protected Matrix X; //matrix, shape = [increasing][d]
     protected Matrix Y; //column vector [increasing][1]
+    protected double lamb;
+    protected double delta;
+    protected double gama;
+    protected double R;
     
-    public Parameters(int d, double initial_beta, double lamb){
-        this.theta = new Matrix(d,1);
-        this.V = Matrix.identity(d,d);
-        this.X = new Matrix(1,d);
+    public Parameters(Setting s){
+        this.theta = new Matrix(s.d,1);
+        this.V = Matrix.identity(s.d,s.d);
+        this.X = new Matrix(1,s.d);
         this.Y = new Matrix(1,1);
-        this.beta = initial_beta;
+        this.beta = s.initial_beta;
+        this.lamb = s.lamb;
+        this.gama = s.gama;
+        this.R = s.R;
+        
     }
 }
