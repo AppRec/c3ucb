@@ -17,12 +17,6 @@ public class C3UCB {
     private int pool_size;
     private boolean usingUser; //decide whether to use user feature or not
     private Parameters params;
-    /*
-    private double lamb;
-    private double delta;
-    private double gama;
-    private double R;
-    */
     private String[] app_list;
     private Matrix af; //matrix consisting of Apps feature
     private Hashtable xf_hist; // Hashtable to store history of x features, where key is user id and value is corresponding xf
@@ -32,12 +26,7 @@ public class C3UCB {
         this.pool_size = s.numOfApps;
         this.usingUser = s.userInfo;
         this.params = new Parameters(s);
-        /*
-        this.delta = s.delta;
-        this.gama = s.gama;
-        this.lamb = s.lamb;
-        this.R = s.R;
-                */
+
         this.af = getAppFeature();
         this.app_list = getAppID();
         /*
@@ -60,7 +49,7 @@ public class C3UCB {
     private String[] recommend_withUser(String uid) {
         Matrix uf = getUserFeature(uid);
         Matrix xf = computeOuterProduct(af, uf);
-        double[] UCBs = calculateUCB(xf);
+        double[] UCBs = calculateUCB(params.theta, xf, params.beta, params.V);
         int[] app_idx = getTopKApps();
         String[] action = new String[k];
         for(int i=0; i<app_idx.length; i++) { action[i] = app_list[app_idx[i]]; }
@@ -94,14 +83,42 @@ public class C3UCB {
     }
     
     private Matrix computeOuterProduct(Matrix af, Matrix uf){
-        Matrix xf = new Matrix(new double[]{123},1);
+        // af's size: (app_r X app_c), uf's size: (1 X usr_c) 
+        // TODO: need normalize after product?
+        int app_r = af.getRowDimension();
+        int app_c = af.getColumnDimension();
+        int usr_c = uf.getColumnDimension();
+        
+        Matrix xf = new Matrix(app_r, app_c * usr_c);
+        for (int i=0; i < app_r; i++) {
+            double[][] temp = af.getMatrix(i,i,0,app_c-1).transpose().times(uf).getArray(); // outer product of 2 feature vector
+            double[] combf = new double[app_c*usr_c]; // flatten the combined feature to 1d
+            for (int j=0; j < usr_c; j++){
+                for (int k=0; k < app_c; k++) {
+                    combf[k*usr_c+j] = temp[k][j]; 
+                }
+            }
+            xf.setMatrix(i, i, 0, app_c*usr_c-1, new Matrix(combf, 1));
+        }
         return xf;
     }
     
-    //return an array consisting of indices of xf
-    private double[] calculateUCB(Matrix xf){ 
-        //Hashtable UCBs = new Hashtable(pool_size); 
-        double[] UCBs = {1,2,3};
+    //r eturn an array consisting of indices of xf
+    // theta: a column vector, 
+    // xf: a matrix containing multiple app's combined feature
+    // V: square matrix
+    private double[] calculateUCB(Matrix theta, Matrix xf, double beta, Matrix V){ 
+        int r_num = xf.getRowDimension();
+        int d = xf.getColumnDimension();
+        double[] UCBs = new double[r_num]; 
+        for (int i=0; i < r_num; i++) { //compute each app's ucb
+            Matrix xf_i = xf.getMatrix(i,i,0,d-1);
+            double vNorm = Math.sqrt(xf_i.times(V.inverse()).times(xf_i.transpose()).get(0,0));
+            double tempUcb = xf_i.times(theta).get(0,0) + beta * vNorm;
+            tempUcb = tempUcb > 1 ? 1 : tempUcb;
+            UCBs[i] = tempUcb;
+        }
+        
         return UCBs;
     }
     
