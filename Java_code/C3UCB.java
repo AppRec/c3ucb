@@ -122,9 +122,24 @@ public class C3UCB {
         return UCBs;
     }
     
-    private int[] getTopKApps(){
-        int[] idx = {1,2,3};
-        return idx;
+    private int[] getTopKApps(double[] UCBs){
+        double[] max = new double[k];
+        int[] maxIndex = new int[k];
+        Arrays.fill(max, Double.NEGATIVE_INFINITY);
+        Arrays.fill(maxIndex, -1);
+
+        top: for(int i = 0; i < UCBs.length; i++) {
+            for(int j = 0; j < k; j++) {
+                if(UCBs[i] > max[j]) {
+                    for(int x = k - 1; x > j; x--) {
+                        maxIndex[x] = maxIndex[x-1]; max[x] = max[x-1];
+                    }
+                    maxIndex[j] = i; max[j] = UCBs[i];
+                    continue top;
+                }
+            }
+        }
+        return maxIndex;
     }
     
     private void addToHistory(Matrix xf, int[] idx, String uid){
